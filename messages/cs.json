@@ -1,0 +1,38 @@
+{
+    "Home": {
+        "title": "Vítejte v Sensory Fun",
+        "subtitle": "Aplikace pro smyslové hry a zábavu.",
+        "login": "Přihlášení",
+        "register": "Registrace"
+    },
+    "Navigation": {
+        "home": "Domů",
+        "about": "O nás",
+        "rooms": "Místnosti",
+        "events": "Události",
+        "vouchers": "Dárkové poukazy",
+        "contact": "Kontakt"
+    },
+    "Admin": {
+        "dashboard": "Nástěnka",
+        "totalBookings": "Celkem rezervací"
+    },
+    "Auth": {
+        "loginTitle": "Přihlaste se pro pokračování",
+        "registerTitle": "Vytvořit účet",
+        "email": "Email",
+        "password": "Heslo",
+        "firstName": "Jméno",
+        "lastName": "Příjmení",
+        "emailPlaceholder": "Zadejte svůj email",
+        "passwordPlaceholder": "Zadejte heslo",
+        "loginButton": "Přihlásit se",
+        "registerButton": "Registrovat",
+        "errors": {
+            "invalidCredentials": "Neplatné přihlašovací údaje.",
+            "userExists": "Uživatel s tímto emailem již existuje.",
+            "failedToCreate": "Nepodařilo se vytvořit uživatele.",
+            "missingFields": "Chybějící pole. Prosím vyplňte všechna pole."
+        }
+    }
+}
