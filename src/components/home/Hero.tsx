@@ -41,7 +41,14 @@ export default function Hero({ banners = [] }: { banners: any[] }) {
     };
 
     if (banners.length === 0) {
-        return null; // Or a default hero
+        return (
+            <div className="h-[600px] w-full bg-gray-900 flex items-center justify-center text-white">
+                <div className="text-center">
+                    <h1 className="text-4xl font-bold mb-4">No Banners Found</h1>
+                    <p>Please add banners in the Admin Dashboard.</p>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -54,7 +61,7 @@ export default function Hero({ banners = [] }: { banners: any[] }) {
                 >
                     {/* Background Image */}
                     <div className="absolute inset-0">
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/90 z-10" />
+                        <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/90 z-10" />
                         <div
                             className={`w-full h-full bg-cover bg-center ${index === currentSlide ? 'animate-ken-burns' : ''}`}
                             style={{ backgroundImage: `url(${banner.image})` }}
