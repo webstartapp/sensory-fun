@@ -82,10 +82,11 @@ The payment system is currently based on the **PayPal API** for simplicity and q
 
 ### Banner
 Banners will be used to promote rooms or events, but can be used for any other purpose. 
-it should have a title (up to 50 characters), subtitle (up to 100 characters), textfor button (up to 20 characters) and one of room or event or link, where:
+it should have a title (up to 50 characters), subtitle (up to 100 characters), textfor button (up to 20 characters) and one of room or event or voucher or link, where:
 
 if it has room, it should have button that redirects to the room page and is visible only if the room is active,  
 if it has event, it should have button that redirects to the event page and is visible only if the event is active,
+if it has voucher, it should have button that redirects to the voucher page and is visible only if the voucher is active,
 if it has link, it should have button that redirects to the link
 
 ### Button 

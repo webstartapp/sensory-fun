@@ -52,7 +52,85 @@
     },
     "Admin": {
         "dashboard": "Nástěnka",
-        "totalBookings": "Celkem rezervací"
+        "totalBookings": "Celkem rezervací",
+        "nav": {
+            "dashboard": "Nástěnka",
+            "rooms": "Místnosti",
+            "events": "Události",
+            "bookings": "Rezervace",
+            "vouchers": "Poukazy",
+            "settings": "Nastavení",
+            "logout": "Odhlásit se"
+        },
+        "rooms": {
+            "name": "Název místnosti",
+            "description": "Popis",
+            "location": "Umístění",
+            "capacity": "Kapacita",
+            "order": "Pořadí",
+            "isActive": "Aktivní",
+            "isPublic": "Veřejná",
+            "create": "Vytvořit místnost",
+            "update": "Upravit místnost",
+            "editTitle": "Upravit místnost",
+            "createTitle": "Nová místnost"
+        },
+        "events": {
+            "name": "Název události",
+            "description": "Popis",
+            "room": "Místnost",
+            "selectRoom": "Vyberte místnost",
+            "price": "Cena (Kč)",
+            "duration": "Délka (min)",
+            "order": "Pořadí",
+            "type": "Typ události",
+            "types": {
+                "single": "Jednorázová",
+                "repeating": "Opakovaná",
+                "campaign": "Kampaň"
+            },
+            "startDate": "Začátek",
+            "endDate": "Konec",
+            "repeatingSettings": "Nastavení opakování",
+            "repeatDays": "Dny opakování",
+            "repeatTime": "Čas opakování",
+            "isPublic": "Veřejná",
+            "isFeatured": "Doporučená",
+            "create": "Vytvořit událost",
+            "update": "Upravit událost",
+            "editTitle": "Upravit událost",
+            "createTitle": "Nová událost"
+        },
+        "bookings": {
+            "customer": "Zákazník",
+            "event": "Událost",
+            "seats": "Místa",
+            "totalPrice": "Cena celkem",
+            "status": "Stav",
+            "actions": "Akce",
+            "processing": "Zpracovává se",
+            "accepted": "Potvrzeno",
+            "declined": "Zamítnuto"
+        },
+        "vouchers": {
+            "name": "Název poukazu",
+            "description": "Popis",
+            "price": "Cena (Kč)",
+            "validityDays": "Platnost (dny)",
+            "capacity": "Kapacita",
+            "order": "Pořadí",
+            "isPublic": "Veřejný",
+            "isFeatured": "Doporučený",
+            "create": "Vytvořit poukaz",
+            "update": "Upravit poukaz",
+            "editTitle": "Upravit poukaz",
+            "createTitle": "Nový poukaz"
+        },
+        "imageUpload": {
+            "label": "Obrázek",
+            "clickToUpload": "Klikněte pro nahrání obrázku",
+            "remove": "Odstranit"
+        }
     },
     "Auth": {
         "loginTitle": "Přihlaste se pro pokračování",

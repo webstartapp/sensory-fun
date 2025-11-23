@@ -1,5 +1,6 @@
 import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import AdminSidebar from '@/components/admin/AdminSidebar';
+import { notFound } from 'next/navigation';
 import React from 'react';
 import { getTranslations } from 'next-intl/server';
 
@@ -9,25 +10,19 @@ export default async function AdminLayout({
     children: React.ReactNode;
 }) {
     const session = await auth();
-    const t = await getTranslations('Admin');
 
     if (!session || session.user.role !== 'admin') {
-        redirect('/login');
+        notFound();
     }
 
     return (
-        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden bg-gray-50 dark:bg-zinc-950">
             <div className="w-full flex-none md:w-64">
-                {/* <SideNav /> - We will add this later */}
-                <div className="p-4 bg-gray-100 h-full">
-                    <h2 className="font-bold">Admin Dashboard</h2>
-                    {/* Temporary Nav */}
-                    <ul>
-                        <li>{t('dashboard')}</li>
-                    </ul>
-                </div>
+                <AdminSidebar />
             </div>
-            <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+            <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+                {children}
+            </div>
         </div>
     );
 }

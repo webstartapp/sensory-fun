@@ -12,11 +12,26 @@ export const authConfig = {
             if (isOnAdmin) {
                 if (isLoggedIn) {
                     // Check if user is admin
-                    // Note: We can't easily check role here without session strategy or putting role in token
-                    // For now, we rely on the token having the role, which we ensure in auth.ts
-                    return (auth.user as any).role === 'admin';
+                    const isAdmin = (auth.user as any).role === 'admin';
+                    if (isAdmin) return true;
+                    // If logged in but not admin, return false (redirects to login) 
+                    // OR we can let them through and let Layout handle 404?
+                    // The user wants 404 for non-admins. 
+                    // If we return false here, they go to login.
+                    // If we return true, they hit the page, and Layout can show 404.
+                    return true;
                 }
                 return false; // Redirect unauthenticated users to login page
+            }
+
+            // Redirect admin to dashboard if they are on home or login?
+            // "whenever admin logins ... he should be redirected to admin dashboard"
+            // This is usually handled in the login form action or `authorized` callback if they access /login while logged in.
+            if (isLoggedIn && nextUrl.pathname === '/login') {
+                const isAdmin = (auth.user as any).role === 'admin';
+                if (isAdmin) {
+                    return Response.redirect(new URL('/admin', nextUrl));
+                }
             }
 
             return true;
