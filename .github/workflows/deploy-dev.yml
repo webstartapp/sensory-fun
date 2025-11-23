@@ -3,7 +3,7 @@ name: Deploy production
 on:
   push:
     branches:
-      - master  # Trigger this action on pushes to the main branch (adjust as needed)
+      - develop  # Trigger this action on pushes to the develop branch (adjust as needed)
 
 jobs:
   deploy:
