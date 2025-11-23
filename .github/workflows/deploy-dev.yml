@@ -95,7 +95,7 @@ jobs:
           SSHPASS: ${{ secrets.SERVER_PASSWORD }}
         run: |
           sshpass -e ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "cd ${{ secrets.DEPLOY_PATH }} && npm install && npm run migrate"
+            "cd ${{ secrets.DEPLOY_PATH }} && npx knex migrate:latest"
             
       - name: Restart PM2 client process
         env:
