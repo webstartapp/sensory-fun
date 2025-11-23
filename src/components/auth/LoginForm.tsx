@@ -3,8 +3,10 @@
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/actions/auth';
-
 import { useTranslations } from 'next-intl';
+import Card from '@/components/ui/Card';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
 
 export default function LoginForm() {
     const [errorMessage, dispatch] = useActionState(authenticate, undefined);
@@ -12,48 +14,28 @@ export default function LoginForm() {
 
     return (
         <form action={dispatch} className="space-y-3">
-            <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-                <h1 className="mb-3 text-2xl">
+            <Card className="px-6 pb-4 pt-8 bg-gray-50 dark:bg-zinc-900 border-none shadow-none">
+                <h1 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
                     {t('loginTitle')}
                 </h1>
-                <div className="w-full">
-                    <div>
-                        <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-                            htmlFor="email"
-                        >
-                            {t('email')}
-                        </label>
-                        <div className="relative">
-                            <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                                id="email"
-                                type="email"
-                                name="email"
-                                placeholder={t('emailPlaceholder')}
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="mt-4">
-                        <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-                            htmlFor="password"
-                        >
-                            {t('password')}
-                        </label>
-                        <div className="relative">
-                            <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                                id="password"
-                                type="password"
-                                name="password"
-                                placeholder={t('passwordPlaceholder')}
-                                required
-                                minLength={6}
-                            />
-                        </div>
-                    </div>
+                <div className="w-full space-y-4">
+                    <Input
+                        label={t('email')}
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder={t('emailPlaceholder')}
+                        required
+                    />
+                    <Input
+                        label={t('password')}
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder={t('passwordPlaceholder')}
+                        required
+                        minLength={6}
+                    />
                 </div>
                 <LoginButton />
                 <div
@@ -67,7 +49,7 @@ export default function LoginForm() {
                         </>
                     )}
                 </div>
-            </div>
+            </Card>
         </form>
     );
 }
@@ -77,8 +59,13 @@ function LoginButton() {
     const t = useTranslations('Auth');
 
     return (
-        <button className="mt-4 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" aria-disabled={pending}>
+        <Button
+            type="submit"
+            fullWidth
+            className="mt-6"
+            disabled={pending}
+        >
             {t('loginButton')}
-        </button>
+        </Button>
     );
 }

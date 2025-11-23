@@ -3,7 +3,32 @@
         "title": "Vítejte v Sensory Fun",
         "subtitle": "Aplikace pro smyslové hry a zábavu.",
         "login": "Přihlášení",
-        "register": "Registrace"
+        "register": "Registrace",
+        "Hero": {
+            "nowOpen": "Nyní otevřeno",
+            "title": "Objevte svět ",
+            "highlight": "smyslové zábavy",
+            "subtitle": "Unikátní prostory navržené pro relaxaci, rozvoj a radost. Přijďte si užít nezapomenutelné chvíle v našem smyslovém centru.",
+            "exploreRooms": "Prozkoumat místnosti",
+            "viewEvents": "Zobrazit akce"
+        },
+        "RoomList": {
+            "title": "Naše prostory",
+            "subtitle": "Prohlédněte si naše unikátní smyslové místnosti.",
+            "viewDetails": "Detail místnosti"
+        },
+        "GiftVoucherList": {
+            "title": "Dárkové poukazy",
+            "subtitle": "Darujte nezapomenutelný zážitek svým blízkým.",
+            "bookVoucher": "Koupit poukaz",
+            "viewRoom": "Zobrazit místnost"
+        },
+        "FeaturedEvents": {
+            "title": "Doporučené akce",
+            "subtitle": "Vyberte si z naší nabídky speciálních programů a workshopů.",
+            "viewAll": "Zobrazit vše",
+            "bookNow": "Rezervovat"
+        }
     },
     "Navigation": {
         "home": "Domů",
@@ -11,7 +36,19 @@
         "rooms": "Místnosti",
         "events": "Události",
         "vouchers": "Dárkové poukazy",
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "login": "Přihlášení",
+        "register": "Registrace"
+    },
+    "Footer": {
+        "description": "Sensory Fun je moderní centrum zaměřené na smyslový rozvoj a relaxaci pro děti i dospělé.",
+        "quickLinks": "Rychlé odkazy",
+        "rooms": "Místnosti",
+        "events": "Události",
+        "about": "O nás",
+        "contact": "Kontakt",
+        "followUs": "Sledujte nás",
+        "allRightsReserved": "Všechna práva vyhrazena."
     },
     "Admin": {
         "dashboard": "Nástěnka",

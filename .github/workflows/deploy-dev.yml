@@ -45,6 +45,27 @@ jobs:
           sshpass -e scp -o StrictHostKeyChecking=no -r ./package-lock.json \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
 
+      - name: Copy knexfile.ts to server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r ./knexfile.ts \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Copy migrations folder to server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r ./migrations \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Copy seeds folder to server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r ./seeds \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
+
 
       - name: Transfer zip to server
         env:
@@ -69,6 +90,13 @@ jobs:
           sshpass -e ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "cp ${{ secrets.ENV_FILE }} ${{ secrets.DEPLOY_PATH }}/.next/standalone/.env"
 
+      - name: Run Migrations
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "cd ${{ secrets.DEPLOY_PATH }} && npm install && npm run migrate"
+            
       - name: Restart PM2 client process
         env:
           SSHPASS: ${{ secrets.SERVER_PASSWORD }}

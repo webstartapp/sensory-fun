@@ -18,7 +18,7 @@ export async function up(knex: Knex): Promise<void> {
         table.text("data").notNullable(); // Base64
         // FKs will be added after other tables are created to avoid circular dependency issues during creation if strictly ordered, 
         // but here we can add columns now and constraints later or just order carefully.
-        // Since rooms/events need primary_image_id, and images need room_id/event_id, we have a circular dependency.
+        // Since rooms/events need image_id, and images need room_id/event_id, we have a circular dependency.
         // Strategy: Create tables first, then add FK constraints.
         table.uuid("room_id").nullable();
         table.uuid("event_id").nullable();
@@ -35,7 +35,7 @@ export async function up(knex: Knex): Promise<void> {
         table.text("description");
         table.integer("capacity").nullable(); // null = infinite
         table.integer("order").defaultTo(0);
-        table.uuid("primary_image_id").nullable(); // FK added later
+        table.uuid("image_id").nullable(); // FK added later
         table.boolean("is_active").defaultTo(true);
         table.boolean("is_public").defaultTo(true);
         table.timestamps(true, true);
@@ -46,7 +46,7 @@ export async function up(knex: Knex): Promise<void> {
         table.uuid("id").primary().defaultTo(knex.fn.uuid());
         table.string("name").notNullable();
         table.text("description");
-        table.uuid("primary_image_id").nullable(); // FK added later
+        table.uuid("image_id").nullable(); // FK added later
         table.timestamps(true, true);
     });
 
@@ -60,13 +60,13 @@ export async function up(knex: Knex): Promise<void> {
     // 6. Events
     await knex.schema.createTable("events", (table) => {
         table.uuid("id").primary().defaultTo(knex.fn.uuid());
-        table.uuid("room_id").references("id").inTable("rooms").onDelete("CASCADE").notNullable();
+        table.uuid("room_id").references("id").inTable("rooms").notNullable()
         table.string("name").notNullable();
         table.text("description");
         table.integer("price").defaultTo(0); // CZK
         table.integer("duration_minutes");
         table.integer("order").defaultTo(0);
-        table.uuid("primary_image_id").nullable(); // FK added later
+        table.uuid("image_id").nullable(); // FK added later
         table.boolean("is_public").defaultTo(true);
         table.boolean("is_featured").defaultTo(false);
         table.enum("type", ["single", "repeating", "campaign"]).notNullable();
@@ -90,13 +90,19 @@ export async function up(knex: Knex): Promise<void> {
     // 8. Vouchers
     await knex.schema.createTable("vouchers", (table) => {
         table.uuid("id").primary().defaultTo(knex.fn.uuid());
-        table.string("code").unique().notNullable();
         table.enum("status", ["active", "used", "expired"]).defaultTo("active");
+        table.text("description");
         table.integer("price").defaultTo(0);
-        table.timestamp("valid_until");
-        table.uuid("primary_image_id").nullable(); // FK added later
-        table.uuid("purchased_by_user_id").references("id").inTable("users").onDelete("SET NULL").nullable();
+        table.timestamp("start_date").notNullable().defaultTo(knex.fn.now());
+        table.timestamp("end_date").nullable();
+        table.string("name").notNullable();
+        table.integer("order").defaultTo(0);
+        table.integer("capacity").nullable(); // null = infinite
+        table.integer("validity_days").defaultTo(90);
+        table.uuid("image_id").nullable(); // FK added later
         table.timestamps(true, true);
+        table.boolean("is_public").defaultTo(true);
+        table.boolean("is_featured").defaultTo(false);
     });
 
     // 9. Bookings
@@ -147,19 +153,19 @@ export async function up(knex: Knex): Promise<void> {
     });
 
     await knex.schema.alterTable("rooms", (table) => {
-        table.foreign("primary_image_id").references("id").inTable("images").onDelete("SET NULL");
+        table.foreign("image_id").references("id").inTable("images").onDelete("SET NULL");
     });
 
     await knex.schema.alterTable("traces", (table) => {
-        table.foreign("primary_image_id").references("id").inTable("images").onDelete("SET NULL");
+        table.foreign("image_id").references("id").inTable("images").onDelete("SET NULL");
     });
 
     await knex.schema.alterTable("events", (table) => {
-        table.foreign("primary_image_id").references("id").inTable("images").onDelete("SET NULL");
+        table.foreign("image_id").references("id").inTable("images").onDelete("SET NULL");
     });
 
     await knex.schema.alterTable("vouchers", (table) => {
-        table.foreign("primary_image_id").references("id").inTable("images").onDelete("SET NULL");
+        table.foreign("image_id").references("id").inTable("images").onDelete("SET NULL");
     });
 }
 
@@ -168,16 +174,16 @@ export async function down(knex: Knex): Promise<void> {
 
     // Remove circular FKs first
     await knex.schema.alterTable("vouchers", (table) => {
-        table.dropForeign("primary_image_id");
+        table.dropForeign("image_id");
     });
     await knex.schema.alterTable("events", (table) => {
-        table.dropForeign("primary_image_id");
+        table.dropForeign("image_id");
     });
     await knex.schema.alterTable("traces", (table) => {
-        table.dropForeign("primary_image_id");
+        table.dropForeign("image_id");
     });
     await knex.schema.alterTable("rooms", (table) => {
-        table.dropForeign("primary_image_id");
+        table.dropForeign("image_id");
     });
     await knex.schema.alterTable("images", (table) => {
         table.dropForeign("room_id");
