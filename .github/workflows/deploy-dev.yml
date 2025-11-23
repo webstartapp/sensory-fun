@@ -1,0 +1,79 @@
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - master  # Trigger this action on pushes to the main branch (adjust as needed)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the app
+        run: npm run build
+
+      - name: copy static to .next
+        run: |
+          cp -r ./public ./.next/standalone
+          cp -r ./.next/static ./.next/standalone/.next
+
+      - name: Zip dist folder
+        run: |
+          zip -r standalone.zip .next/standalone
+
+      - name: Copy package.json to server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r ./package.json \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Copy package-lock.json folder to server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r ./package-lock.json \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+
+      - name: Transfer zip to server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r ./standalone.zip \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
+      
+
+      - name: Unzip on server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e ssh -o StrictHostKeyChecking=no \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "cd ${{ secrets.DEPLOY_PATH }} && unzip -o standalone.zip && rm standalone.zip"
+
+      - name: Copy .env file on server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "cp ${{ secrets.ENV_FILE }} ${{ secrets.DEPLOY_PATH }}/.next/standalone/.env"
+
+      - name: Restart PM2 client process
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -e ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            pm2 restart ${{ secrets.PM2_APP_NAME }}
+
