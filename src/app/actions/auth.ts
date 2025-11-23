@@ -29,7 +29,20 @@ export async function authenticate(
     formData: FormData,
 ) {
     try {
-        await signIn('credentials', formData);
+        const email = formData.get('email') as string;
+        // Fetch user to determine role for redirect
+        const user = await db('users').where({ email }).first();
+
+        let redirectTo = '/';
+        if (user && user.role === 'admin') {
+            redirectTo = '/admin';
+        }
+
+        await signIn('credentials', {
+            email,
+            password: formData.get('password'),
+            redirectTo,
+        });
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {

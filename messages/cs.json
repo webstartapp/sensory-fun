@@ -38,7 +38,8 @@
         "vouchers": "Dárkové poukazy",
         "contact": "Kontakt",
         "login": "Přihlášení",
-        "register": "Registrace"
+        "register": "Registrace",
+        "logout": "Odhlásit se"
     },
     "Footer": {
         "description": "Sensory Fun je moderní centrum zaměřené na smyslový rozvoj a relaxaci pro děti i dospělé.",

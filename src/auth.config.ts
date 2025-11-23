@@ -27,11 +27,13 @@ export const authConfig = {
             // Redirect admin to dashboard if they are on home or login?
             // "whenever admin logins ... he should be redirected to admin dashboard"
             // This is usually handled in the login form action or `authorized` callback if they access /login while logged in.
-            if (isLoggedIn && nextUrl.pathname === '/login') {
+            // Redirect logged-in users away from auth pages
+            if (isLoggedIn && (nextUrl.pathname === '/login' || nextUrl.pathname === '/register')) {
                 const isAdmin = (auth.user as any).role === 'admin';
                 if (isAdmin) {
                     return Response.redirect(new URL('/admin', nextUrl));
                 }
+                return Response.redirect(new URL('/', nextUrl));
             }
 
             return true;
