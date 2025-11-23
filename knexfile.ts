@@ -12,27 +12,7 @@ const config: { [key: string]: Knex.Config } = {
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             port: Number(process.env.DB_PORT),
-        },
-        pool: {
-            min: 2,
-            max: 10,
-        },
-        migrations: {
-            tableName: "knex_migrations",
-            directory: "./migrations",
-            extension: "ts",
-        },
-        seeds: {
-            directory: "./seeds",
-            extension: "ts",
-        },
-    },
-
-    production: {
-        client: "postgresql",
-        connection: {
-            connectionString: process.env.DATABASE_URL,
-            ssl: { rejectUnauthorized: false },
+            ssl: false,
         },
         pool: {
             min: 2,

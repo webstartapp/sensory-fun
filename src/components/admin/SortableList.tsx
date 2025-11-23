@@ -44,7 +44,7 @@ export function SortableItem({ id, children }: SortableItemProps) {
             <div {...attributes} {...listeners} className="px-4 py-4 cursor-grab text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                 <GripVertical className="h-5 w-5" />
             </div>
-            <div className="flex-grow">
+            <div className="grow">
                 {children}
             </div>
         </div>

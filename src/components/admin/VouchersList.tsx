@@ -36,7 +36,7 @@ export default function VouchersList({ initialVouchers }: { initialVouchers: Vou
     const renderItem = (voucher: Voucher) => (
         <div className="flex items-center justify-between p-2">
             <div className="flex items-center space-x-4">
-                <div className="relative h-12 w-12 rounded overflow-hidden bg-gray-100 dark:bg-zinc-800 flex-shrink-0">
+                <div className="relative h-12 w-12 rounded overflow-hidden bg-gray-100 dark:bg-zinc-800 shrink-0">
                     {voucher.image_data ? (
                         <Image
                             src={voucher.image_data}
