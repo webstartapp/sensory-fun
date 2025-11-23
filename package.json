@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "knex-build": "npx tsc -p tsconfig.knex.json&& npm run knex-cleanup && npm run knex-move",
+    "knex-cleanup": "rm -rf ./.next/standalone/migrations/* && rm -rf ./.next/standalone/seeds/* && rm -f ./.next/standalone/knexfile.js",
+    "knex-move": "mv ./.next/standalone/dist/migrations ./.next/standalone/migrations && mv ./.next/standalone/dist/seeds ./.next/standalone/seeds && mv ./.next/standalone/dist/knexfile.js ./.next/standalone/knexfile.js && rm -rf ./.next/standalone/dist",
     "start": "next start",
     "lint": "eslint",
     "migrate": "npx knex migrate:latest",
