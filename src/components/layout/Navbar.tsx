@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Menu, X, Sparkles, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { useState } from 'react';
 import { Session } from 'next-auth';
-import { signOut } from 'next-auth/react';
+import { logout } from '@/app/actions/auth';
 
 export default function Navbar({ session }: { session: Session | null }) {
     const t = useTranslations('Navigation');
@@ -69,7 +69,7 @@ export default function Navbar({ session }: { session: Session | null }) {
                                             </Link>
                                         )}
                                         <button
-                                            onClick={() => signOut({ callbackUrl: '/' })}
+                                            onClick={() => logout()}
                                             className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10"
                                         >
                                             <LogOut className="w-4 h-4 mr-2" />
@@ -145,7 +145,7 @@ export default function Navbar({ session }: { session: Session | null }) {
                                         </Link>
                                     )}
                                     <button
-                                        onClick={() => signOut({ callbackUrl: '/' })}
+                                        onClick={() => logout()}
                                         className="block w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:bg-red-50 rounded-lg dark:hover:bg-red-900/10"
                                     >
                                         {t('logout')}
