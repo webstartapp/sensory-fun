@@ -6,6 +6,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Image from 'next/image';
+import { formatImageSrc } from '@/lib/utils';
 
 export default function GiftVoucherList({ vouchers = [] }: { vouchers: any[] }) {
     const t = useTranslations('Home.GiftVoucherList');
@@ -24,12 +25,12 @@ export default function GiftVoucherList({ vouchers = [] }: { vouchers: any[] }) 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {vouchers.map((voucher) => (
-                        <Card key={voucher.id} className="group hover:shadow-xl transition-all duration-300">
+                        <Card key={voucher.id} className="group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                             {/* Image */}
                             <div className="relative h-48 overflow-hidden bg-gray-100 dark:bg-zinc-800">
                                 {voucher.image ? (
                                     <Image
-                                        src={voucher.image}
+                                        src={formatImageSrc(voucher.image) || ''}
                                         alt={voucher.name}
                                         fill
                                         className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -42,16 +43,16 @@ export default function GiftVoucherList({ vouchers = [] }: { vouchers: any[] }) 
                             </div>
 
                             {/* Content */}
-                            <div className="p-6">
+                            <div className="p-6 flex flex-col grow">
                                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                                     {voucher.name}
                                 </h3>
 
-                                <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm line-clamp-2">
+                                <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm line-clamp-2 grow">
                                     {voucher.description}
                                 </p>
 
-                                <div className="space-y-3">
+                                <div className="space-y-3 mt-auto">
                                     <Button
                                         href={`/vouchers/${voucher.id}`}
                                         variant="primary"

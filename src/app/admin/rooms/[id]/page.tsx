@@ -11,7 +11,12 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
     let room = null;
 
     if (!isNew) {
-        room = await db('rooms').where({ id }).first();
+        room = await db('rooms')
+            .leftJoin('images', 'rooms.image_id', 'images.id')
+            .select('rooms.*', 'images.data as image_data')
+            .where('rooms.id', id)
+            .first();
+
         if (!room) {
             notFound();
         }

@@ -6,7 +6,10 @@ export async function seed(knex: Knex): Promise<void> {
         return new Promise((resolve, reject) => {
             fetch(url)
                 .then(response => response.arrayBuffer())
-                .then(buffer => Buffer.from(buffer).toString('base64'))
+                .then(buffer => {
+                    const base64 = Buffer.from(buffer).toString('base64');
+                    return `data:image/jpeg;base64,${base64}`;
+                })
                 .then(resolve)
                 .catch(reject);
         });

@@ -7,6 +7,7 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Card from '@/components/ui/Card';
 import ImageUpload from './ImageUpload';
+import { formatImageSrc } from '@/lib/utils';
 
 interface RoomFormProps {
     room?: {
@@ -36,7 +37,7 @@ export default function RoomForm({ room }: RoomFormProps) {
                     <div className="col-span-2">
                         <ImageUpload
                             name="image"
-                            defaultValue={room?.image_data}
+                            defaultValue={formatImageSrc(room?.image_data)}
                             label={t('imageUpload.label')}
                         />
                     </div>

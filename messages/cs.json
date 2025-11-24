@@ -30,6 +30,42 @@
             "bookNow": "Rezervovat"
         }
     },
+    "RoomDetails": {
+        "about": "O místnosti",
+        "details": "Detaily",
+        "capacity": "Kapacita",
+        "people": "osob",
+        "price": "Cena",
+        "hour": "hod",
+        "bookNow": "Rezervovat termín"
+    },
+    "VoucherDetails": {
+        "about": "O poukazu",
+        "details": "Detaily",
+        "price": "Cena",
+        "validity": "Platnost",
+        "days": "dní",
+        "buyNow": "Koupit poukaz"
+    },
+    "EventDetails": {
+        "about": "O akci",
+        "details": "Detaily",
+        "date": "Datum",
+        "time": "Čas",
+        "capacity": "Kapacita",
+        "people": "osob",
+        "price": "Cena",
+        "bookNow": "Rezervovat místo"
+    },
+    "EventsPage": {
+        "title": "Nadcházející Akce",
+        "subtitle": "Připojte se k nám na speciální akce a workshopy.",
+        "noEvents": "Momentálně nejsou naplánovány žádné akce."
+    },
+    "RoomsPage": {
+        "title": "Naše Místnosti",
+        "subtitle": "Prozkoumejte naše unikátní smyslové místnosti navržené pro relaxaci a rozvoj."
+    },
     "Navigation": {
         "home": "Domů",
         "about": "O nás",
@@ -60,6 +96,7 @@
             "events": "Události",
             "bookings": "Rezervace",
             "vouchers": "Poukazy",
+            "banners": "Bannery",
             "settings": "Nastavení",
             "logout": "Odhlásit se"
         },
@@ -95,6 +132,7 @@
             "repeatingSettings": "Nastavení opakování",
             "repeatDays": "Dny opakování",
             "repeatTime": "Čas opakování",
+            "isActive": "Aktivní",
             "isPublic": "Veřejná",
             "isFeatured": "Doporučená",
             "create": "Vytvořit událost",
@@ -131,6 +169,32 @@
             "label": "Obrázek",
             "clickToUpload": "Klikněte pro nahrání obrázku",
             "remove": "Odstranit"
+        },
+        "banners": {
+            "title": "Bannery",
+            "create": "Vytvořit banner",
+            "createTitle": "Nový banner",
+            "editTitle": "Upravit banner",
+            "image": "Obrázek",
+            "titleLabel": "Nadpis",
+            "subtitle": "Podnadpis",
+            "buttonText": "Text tlačítka",
+            "type": "Typ odkazu",
+            "types": {
+                "room": "Místnost",
+                "event": "Událost",
+                "voucher": "Poukaz",
+                "link": "Externí odkaz"
+            },
+            "selectRoom": "Vyberte místnost",
+            "selectRoomPlaceholder": "Vyberte místnost...",
+            "selectEvent": "Vyberte událost",
+            "selectEventPlaceholder": "Vyberte událost...",
+            "selectVoucher": "Vyberte poukaz",
+            "selectVoucherPlaceholder": "Vyberte poukaz...",
+            "linkUrl": "URL odkazu",
+            "isActive": "Aktivní",
+            "update": "Upravit banner"
         }
     },
     "Auth": {

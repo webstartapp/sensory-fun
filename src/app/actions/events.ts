@@ -13,6 +13,7 @@ const EventSchema = z.object({
     price: z.coerce.number().min(0),
     duration_minutes: z.coerce.number().optional(),
     order: z.coerce.number().optional(),
+    is_active: z.coerce.boolean().optional(),
     is_public: z.coerce.boolean().optional(),
     is_featured: z.coerce.boolean().optional(),
     type: z.enum(["single", "repeating", "campaign"]),
@@ -37,6 +38,7 @@ export async function createEvent(prevState: any, formData: FormData) {
         price: formData.get('price'),
         duration_minutes: formData.get('duration_minutes'),
         order: formData.get('order'),
+        is_active: formData.get('is_active') === 'on',
         is_public: formData.get('is_public') === 'on',
         is_featured: formData.get('is_featured') === 'on',
         type: formData.get('type'),
@@ -54,7 +56,7 @@ export async function createEvent(prevState: any, formData: FormData) {
 
     const {
         room_id, name, description, price, duration_minutes, order,
-        is_public, is_featured, type, start_date, end_date, repeat_time
+        is_active, is_public, is_featured, type, start_date, end_date, repeat_time
     } = validatedFields.data;
 
     const imageData = formData.get('image') as string;
@@ -73,6 +75,7 @@ export async function createEvent(prevState: any, formData: FormData) {
             price,
             duration_minutes: duration_minutes || null,
             order: order || 0,
+            is_active: is_active ?? false,
             is_public: is_public ?? true,
             is_featured: is_featured ?? false,
             type,
@@ -106,6 +109,7 @@ export async function updateEvent(id: string, prevState: any, formData: FormData
         price: formData.get('price'),
         duration_minutes: formData.get('duration_minutes'),
         order: formData.get('order'),
+        is_active: formData.get('is_active') === 'on',
         is_public: formData.get('is_public') === 'on',
         is_featured: formData.get('is_featured') === 'on',
         type: formData.get('type'),
@@ -123,7 +127,7 @@ export async function updateEvent(id: string, prevState: any, formData: FormData
 
     const {
         room_id, name, description, price, duration_minutes, order,
-        is_public, is_featured, type, start_date, end_date, repeat_time
+        is_active, is_public, is_featured, type, start_date, end_date, repeat_time
     } = validatedFields.data;
 
     const imageData = formData.get('image') as string;
@@ -144,6 +148,7 @@ export async function updateEvent(id: string, prevState: any, formData: FormData
             price,
             duration_minutes: duration_minutes || null,
             order: order || 0,
+            is_active: is_active ?? false,
             is_public: is_public ?? true,
             is_featured: is_featured ?? false,
             type,

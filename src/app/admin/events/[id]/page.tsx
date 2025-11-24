@@ -12,7 +12,12 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
     const rooms = await db('rooms').select('id', 'name').orderBy('name', 'asc');
 
     if (!isNew) {
-        event = await db('events').where({ id }).first();
+        event = await db('events')
+            .leftJoin('images', 'events.image_id', 'images.id')
+            .select('events.*', 'images.data as image_data')
+            .where('events.id', id)
+            .first();
+
         if (!event) {
             notFound();
         }

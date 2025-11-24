@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from '@/components/ui/Button';
+import { formatImageSrc } from '@/lib/utils';
+import Image from 'next/image';
 
 interface BannerData {
     id: string;
@@ -62,10 +64,15 @@ export default function Hero({ banners = [] }: { banners: any[] }) {
                     {/* Background Image */}
                     <div className="absolute inset-0">
                         <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/90 z-10" />
-                        <div
-                            className={`w-full h-full bg-cover bg-center ${index === currentSlide ? 'animate-ken-burns' : ''}`}
-                            style={{ backgroundImage: `url(${banner.image})` }}
-                        />
+                        {banner.image && (
+                            <Image
+                                src={formatImageSrc(banner.image) || ''}
+                                alt={banner.title}
+                                fill
+                                className={`object-cover ${index === currentSlide ? 'animate-ken-burns' : ''}`}
+                                priority={index === 0}
+                            />
+                        )}
                     </div>
 
                     {/* Content */}
@@ -83,7 +90,8 @@ export default function Hero({ banners = [] }: { banners: any[] }) {
                                     <Button
                                         href={getButtonLink(banner)!}
                                         size="lg"
-                                        className="bg-white text-black hover:bg-gray-100 dark:bg-white dark:text-black"
+                                        variant="ghost"
+                                        className="bg-white text-black hover:bg-gray-200 dark:bg-white dark:text-black dark:hover:bg-gray-200 transition-all hover:scale-105 shadow-lg"
                                     >
                                         {banner.button_text}
                                     </Button>
@@ -128,4 +136,3 @@ export default function Hero({ banners = [] }: { banners: any[] }) {
         </div>
     );
 }
-

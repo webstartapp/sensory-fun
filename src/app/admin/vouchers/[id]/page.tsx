@@ -11,7 +11,12 @@ export default async function VoucherPage({ params }: { params: Promise<{ id: st
     let voucher = null;
 
     if (!isNew) {
-        voucher = await db('vouchers').where({ id }).first();
+        voucher = await db('vouchers')
+            .leftJoin('images', 'vouchers.image_id', 'images.id')
+            .select('vouchers.*', 'images.data as image_data')
+            .where('vouchers.id', id)
+            .first();
+
         if (!voucher) {
             notFound();
         }

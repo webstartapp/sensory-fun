@@ -7,6 +7,7 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Card from '@/components/ui/Card';
 import ImageUpload from './ImageUpload';
+import { formatImageSrc } from '@/lib/utils';
 
 interface Room {
     id: string;
@@ -22,6 +23,7 @@ interface EventFormProps {
         price: number;
         duration_minutes: number | null;
         order: number;
+        is_active: boolean;
         is_public: boolean;
         is_featured: boolean;
         type: "single" | "repeating" | "campaign";
@@ -64,7 +66,7 @@ export default function EventForm({ event, rooms }: EventFormProps) {
                     <div className="col-span-2">
                         <ImageUpload
                             name="image"
-                            defaultValue={event?.image_data}
+                            defaultValue={formatImageSrc(event?.image_data)}
                             label={t('imageUpload.label')}
                         />
                     </div>
@@ -237,6 +239,18 @@ export default function EventForm({ event, rooms }: EventFormProps) {
                     <div className="col-span-2 flex items-center space-x-4">
                         <div className="flex items-center">
                             <input
+                                id="is_active"
+                                name="is_active"
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-zinc-800 dark:bg-zinc-900"
+                                defaultChecked={event?.is_active ?? false}
+                            />
+                            <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900 dark:text-white">
+                                {t('events.isActive')}
+                            </label>
+                        </div>
+                        <div className="flex items-center">
+                            <input
                                 id="is_public"
                                 name="is_public"
                                 type="checkbox"
@@ -247,18 +261,7 @@ export default function EventForm({ event, rooms }: EventFormProps) {
                                 {t('events.isPublic')}
                             </label>
                         </div>
-                        <div className="flex items-center">
-                            <input
-                                id="is_featured"
-                                name="is_featured"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-zinc-800 dark:bg-zinc-900"
-                                defaultChecked={event?.is_featured ?? false}
-                            />
-                            <label htmlFor="is_featured" className="ml-2 block text-sm text-gray-900 dark:text-white">
-                                {t('events.isFeatured')}
-                            </label>
-                        </div>
+                        {/* Removed is_featured as per user request */}
                     </div>
                 </div>
 

@@ -7,6 +7,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Image from 'next/image';
+import { formatImageSrc } from '@/lib/utils';
 
 export default function RoomList({ rooms = [] }: { rooms: any[] }) {
     const t = useTranslations('Home.RoomList');
@@ -25,12 +26,12 @@ export default function RoomList({ rooms = [] }: { rooms: any[] }) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {rooms.map((room) => (
-                        <Card key={room.id} className="group hover:shadow-xl transition-all duration-300">
+                        <Card key={room.id} className="group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                             {/* Image */}
                             <div className="relative h-64 overflow-hidden bg-gray-100 dark:bg-zinc-800">
                                 {room.image ? (
                                     <Image
-                                        src={room.image}
+                                        src={formatImageSrc(room.image) || ''}
                                         alt={room.name}
                                         fill
                                         className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -43,7 +44,7 @@ export default function RoomList({ rooms = [] }: { rooms: any[] }) {
                             </div>
 
                             {/* Content */}
-                            <div className="p-6">
+                            <div className="p-6 flex flex-col grow">
                                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                                     {room.name}
                                 </h3>
@@ -57,7 +58,7 @@ export default function RoomList({ rooms = [] }: { rooms: any[] }) {
                                     href={`/rooms/${room.id}`}
                                     variant="outline"
                                     fullWidth
-                                    className="group"
+                                    className="group mt-auto"
                                 >
                                     {t('viewDetails')}
                                     <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />

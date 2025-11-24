@@ -6,6 +6,7 @@ import { createBanner, updateBanner } from '@/app/actions/banners';
 import Button from '@/components/ui/Button';
 import ImageUpload from './ImageUpload';
 import { useTranslations } from 'next-intl';
+import { formatImageSrc } from '@/lib/utils';
 
 interface BannerFormProps {
     banner?: {
@@ -45,13 +46,17 @@ export default function BannerForm({ banner, rooms, events, vouchers }: BannerFo
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         {t('image')}
                     </label>
-                    <ImageUpload name="image" defaultValue={banner?.image_data} />
+                    <ImageUpload
+                        name="image"
+                        defaultValue={formatImageSrc(banner?.image_data)}
+                        label={t('image')}
+                    />
                 </div>
 
                 {/* Title */}
                 <div>
                     <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('title')}
+                        {t('titleLabel')}
                     </label>
                     <input
                         type="text"

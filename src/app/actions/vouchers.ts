@@ -13,6 +13,7 @@ const VoucherSchema = z.object({
     validity_days: z.coerce.number().min(1),
     capacity: z.coerce.number().optional(),
     order: z.coerce.number().optional(),
+    is_active: z.coerce.boolean().optional(),
     is_public: z.coerce.boolean().optional(),
     is_featured: z.coerce.boolean().optional(),
 });
@@ -30,6 +31,7 @@ export async function createVoucher(prevState: any, formData: FormData) {
         validity_days: formData.get('validity_days'),
         capacity: formData.get('capacity'),
         order: formData.get('order'),
+        is_active: formData.get('is_active') === 'on',
         is_public: formData.get('is_public') === 'on',
         is_featured: formData.get('is_featured') === 'on',
     });
@@ -41,7 +43,7 @@ export async function createVoucher(prevState: any, formData: FormData) {
         };
     }
 
-    const { name, description, price, validity_days, capacity, order, is_public, is_featured } = validatedFields.data;
+    const { name, description, price, validity_days, capacity, order, is_active, is_public, is_featured } = validatedFields.data;
     const imageData = formData.get('image') as string;
     let imageId = null;
 
@@ -58,6 +60,7 @@ export async function createVoucher(prevState: any, formData: FormData) {
             validity_days,
             capacity: capacity || null,
             order: order || 0,
+            is_active: is_active ?? false,
             is_public: is_public ?? true,
             is_featured: is_featured ?? false,
             image_id: imageId,
@@ -84,6 +87,7 @@ export async function updateVoucher(id: string, prevState: any, formData: FormDa
         validity_days: formData.get('validity_days'),
         capacity: formData.get('capacity'),
         order: formData.get('order'),
+        is_active: formData.get('is_active') === 'on',
         is_public: formData.get('is_public') === 'on',
         is_featured: formData.get('is_featured') === 'on',
     });
@@ -95,7 +99,7 @@ export async function updateVoucher(id: string, prevState: any, formData: FormDa
         };
     }
 
-    const { name, description, price, validity_days, capacity, order, is_public, is_featured } = validatedFields.data;
+    const { name, description, price, validity_days, capacity, order, is_active, is_public, is_featured } = validatedFields.data;
     const imageData = formData.get('image') as string;
 
     try {
@@ -114,6 +118,7 @@ export async function updateVoucher(id: string, prevState: any, formData: FormDa
             validity_days,
             capacity: capacity || null,
             order: order || 0,
+            is_active: is_active ?? false,
             is_public: is_public ?? true,
             is_featured: is_featured ?? false,
             updated_at: db.fn.now(),

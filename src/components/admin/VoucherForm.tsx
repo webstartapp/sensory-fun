@@ -7,6 +7,7 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Card from '@/components/ui/Card';
 import ImageUpload from './ImageUpload';
+import { formatImageSrc } from '@/lib/utils';
 
 interface VoucherFormProps {
     voucher?: {
@@ -17,6 +18,7 @@ interface VoucherFormProps {
         validity_days: number;
         capacity: number | null;
         order: number;
+        is_active: boolean;
         is_public: boolean;
         is_featured: boolean;
         image_data?: string;
@@ -37,7 +39,7 @@ export default function VoucherForm({ voucher }: VoucherFormProps) {
                     <div className="col-span-2">
                         <ImageUpload
                             name="image"
-                            defaultValue={voucher?.image_data}
+                            defaultValue={formatImageSrc(voucher?.image_data)}
                             label={t('imageUpload.label')}
                         />
                     </div>
@@ -96,6 +98,18 @@ export default function VoucherForm({ voucher }: VoucherFormProps) {
                     <div className="col-span-2 flex items-center space-x-4">
                         <div className="flex items-center">
                             <input
+                                id="is_active"
+                                name="is_active"
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-zinc-800 dark:bg-zinc-900"
+                                defaultChecked={voucher?.is_active ?? false}
+                            />
+                            <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900 dark:text-white">
+                                {t('rooms.isActive')}
+                            </label>
+                        </div>
+                        <div className="flex items-center">
+                            <input
                                 id="is_public"
                                 name="is_public"
                                 type="checkbox"
@@ -106,18 +120,7 @@ export default function VoucherForm({ voucher }: VoucherFormProps) {
                                 {t('vouchers.isPublic')}
                             </label>
                         </div>
-                        <div className="flex items-center">
-                            <input
-                                id="is_featured"
-                                name="is_featured"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-zinc-800 dark:bg-zinc-900"
-                                defaultChecked={voucher?.is_featured ?? false}
-                            />
-                            <label htmlFor="is_featured" className="ml-2 block text-sm text-gray-900 dark:text-white">
-                                {t('vouchers.isFeatured')}
-                            </label>
-                        </div>
+                        {/* Removed is_featured as per user request */}
                     </div>
                 </div>
 
