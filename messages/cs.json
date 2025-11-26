@@ -37,6 +37,7 @@
         "people": "osob",
         "price": "Cena",
         "hour": "hod",
+        "location": "Lokalita",
         "bookNow": "Rezervovat termín"
     },
     "VoucherDetails": {
@@ -55,7 +56,12 @@
         "capacity": "Kapacita",
         "people": "osob",
         "price": "Cena",
-        "bookNow": "Rezervovat místo"
+        "validFrom": "Platné od",
+        "validity": "Platnost",
+        "selectDate": "Vyberte datum",
+        "bookNow": "Rezervovat místo",
+        "free": "Zdarma",
+        "soldOut": "Vyprodáno"
     },
     "EventsPage": {
         "title": "Nadcházející Akce",
@@ -65,6 +71,10 @@
     "RoomsPage": {
         "title": "Naše Místnosti",
         "subtitle": "Prozkoumejte naše unikátní smyslové místnosti navržené pro relaxaci a rozvoj."
+    },
+    "VouchersPage": {
+        "title": "Dárkové Poukazy",
+        "subtitle": "Vyberte si z naší nabídky dárkových poukazů a potěšte své blízké."
     },
     "Navigation": {
         "home": "Domů",

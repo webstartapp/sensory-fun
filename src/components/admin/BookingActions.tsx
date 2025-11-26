@@ -1,7 +1,7 @@
 'use client';
 
 import { Check, X } from 'lucide-react';
-import { approveBooking, declineBooking } from '@/app/actions/bookings';
+import { adminApproveBooking, adminDeclineBooking } from '@/app/actions/bookings';
 import { useTransition } from 'react';
 
 export default function BookingActions({ id }: { id: string }) {
@@ -10,7 +10,7 @@ export default function BookingActions({ id }: { id: string }) {
     const handleApprove = () => {
         if (confirm('Approve this booking?')) {
             startTransition(async () => {
-                await approveBooking(id);
+                await adminApproveBooking(id);
             });
         }
     };
@@ -18,7 +18,7 @@ export default function BookingActions({ id }: { id: string }) {
     const handleDecline = () => {
         if (confirm('Decline this booking?')) {
             startTransition(async () => {
-                await declineBooking(id);
+                await adminDeclineBooking(id);
             });
         }
     };

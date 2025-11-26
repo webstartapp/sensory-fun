@@ -103,7 +103,7 @@ export default function FeaturedEvents() {
                                         {event.price}
                                     </span>
                                     <Button
-                                        href={`/events/${event.id}`}
+                                        href={`/events/${event.id}/book`}
                                         variant="secondary"
                                         size="sm"
                                     >

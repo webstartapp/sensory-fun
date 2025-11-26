@@ -54,7 +54,7 @@ export default function GiftVoucherList({ vouchers = [] }: { vouchers: any[] }) 
 
                                 <div className="space-y-3 mt-auto">
                                     <Button
-                                        href={`/vouchers/${voucher.id}`}
+                                        href={`/vouchers/${voucher.id}/buy`}
                                         variant="primary"
                                         fullWidth
                                     >

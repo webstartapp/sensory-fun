@@ -3,13 +3,15 @@ import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Banknote, Gift } from 'lucide-react';
+import { Banknote, Gift, Edit } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { formatImageSrc } from '@/lib/utils';
+import { auth } from '@/auth';
 
 export default async function VoucherDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const t = await getTranslations('VoucherDetails');
+    const session = await auth();
 
     const voucher = await db('vouchers')
         .leftJoin('images', 'vouchers.image_id', 'images.id')
@@ -41,13 +43,27 @@ export default async function VoucherDetailsPage({ params }: { params: Promise<{
                 )}
                 <div className="absolute inset-0 flex items-end pb-16">
                     <Container>
-                        <div className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
-                            <Gift className="w-4 h-4" />
-                            <span>Dárkový Poukaz</span>
+                        <div className="flex justify-between items-end">
+                            <div>
+                                <div className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
+                                    <Gift className="w-4 h-4" />
+                                    <span>Dárkový Poukaz</span>
+                                </div>
+                                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+                                    {voucher.name}
+                                </h1>
+                            </div>
+                            {session?.user?.role === 'admin' && (
+                                <Button
+                                    href={`/admin/vouchers/${voucher.id}/edit`}
+                                    variant="secondary"
+                                    className="mb-2"
+                                >
+                                    <Edit className="w-4 h-4 mr-2" />
+                                    Upravit
+                                </Button>
+                            )}
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-                            {voucher.name}
-                        </h1>
                     </Container>
                 </div>
             </div>
@@ -96,7 +112,7 @@ export default async function VoucherDetailsPage({ params }: { params: Promise<{
                             </div>
 
                             <Button
-                                href={`/booking?voucherId=${voucher.id}`} // Placeholder
+                                href={`/vouchers/${voucher.id}/buy`}
                                 variant="primary"
                                 fullWidth
                                 size="lg"

@@ -186,3 +186,21 @@ export async function deleteEvent(id: string) {
         return { message: 'Database Error: Failed to Delete Event.' };
     }
 }
+
+export async function getEventAvailability(eventId: string, date: Date) {
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const bookings = await db('bookings')
+        .where('event_id', eventId)
+        .whereBetween('booking_time', [startOfDay, endOfDay])
+        .whereIn('status', ['confirmed', 'authorized', 'pending_payment'])
+        .sum('seats as booked_seats')
+        .first();
+
+    return {
+        bookedSeats: Number(bookings?.booked_seats || 0)
+    };
+}

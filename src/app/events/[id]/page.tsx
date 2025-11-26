@@ -3,19 +3,23 @@ import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { MapPin, Users, Clock, Banknote, Calendar } from 'lucide-react';
+import { MapPin, Users, Clock, Banknote, Calendar, Edit } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import { formatImageSrc } from '@/lib/utils';
+import { auth } from '@/auth';
+import EventBookingCard from '@/components/events/EventBookingCard';
 
 export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const t = await getTranslations('EventDetails');
+    const session = await auth();
 
     const event = await db('events')
         .leftJoin('images', 'events.image_id', 'images.id')
-        .select('events.*', 'images.data as image')
+        .join('rooms', 'events.room_id', 'rooms.id')
+        .select('events.*', 'images.data as image', 'rooms.capacity')
         .where('events.id', id)
         .andWhere('events.is_active', true)
         .andWhere('events.is_public', true)
@@ -47,17 +51,42 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
                 )}
                 <div className="absolute inset-0 flex items-end pb-16">
                     <Container>
-                        {startDate && (
-                            <div className="inline-block bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
-                                {format(startDate, 'd. MMMM yyyy', { locale: cs })}
+                        <div className="flex justify-between items-end">
+                            <div>
+                                {event.type === 'single' && startDate && (
+                                    <div className="inline-block bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
+                                        {format(startDate, 'd. MMMM yyyy', { locale: cs })}
+                                    </div>
+                                )}
+                                {event.type === 'repeating' && startDate && (
+                                    <div className="inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
+                                        {t('validFrom')} {format(startDate, 'd. MMMM yyyy', { locale: cs })}
+                                    </div>
+                                )}
+                                {event.type === 'campaign' && startDate && (
+                                    <div className="inline-block bg-green-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
+                                        {format(startDate, 'd. M. yyyy', { locale: cs })}
+                                        {endDate && ` - ${format(endDate, 'd. M. yyyy', { locale: cs })}`}
+                                    </div>
+                                )}
+                                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+                                    {event.title}
+                                </h1>
+                                <div className="flex items-center gap-2 text-gray-200 text-lg">
+                                    <MapPin className="w-5 h-5" />
+                                    <span>{event.location || 'Unknown Location'}</span>
+                                </div>
                             </div>
-                        )}
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-                            {event.title}
-                        </h1>
-                        <div className="flex items-center gap-2 text-gray-200 text-lg">
-                            <MapPin className="w-5 h-5" />
-                            <span>{event.location || 'Unknown Location'}</span>
+                            {session?.user?.role === 'admin' && (
+                                <Button
+                                    href={`/admin/events/${event.id}/edit`}
+                                    variant="secondary"
+                                    className="mb-2"
+                                >
+                                    <Edit className="w-4 h-4 mr-2" />
+                                    Upravit
+                                </Button>
+                            )}
                         </div>
                     </Container>
                 </div>
@@ -79,66 +108,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
 
                     {/* Sidebar / Info Card */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-zinc-800 sticky top-24">
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-                                {t('details')}
-                            </h3>
-
-                            <div className="space-y-4 mb-8">
-                                {startDate && (
-                                    <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-zinc-800">
-                                        <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                            <Calendar className="w-5 h-5" />
-                                            <span>{t('date')}</span>
-                                        </div>
-                                        <span className="font-medium text-gray-900 dark:text-white">
-                                            {format(startDate, 'd. M. yyyy')}
-                                        </span>
-                                    </div>
-                                )}
-
-                                {startDate && endDate && (
-                                    <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-zinc-800">
-                                        <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                            <Clock className="w-5 h-5" />
-                                            <span>{t('time')}</span>
-                                        </div>
-                                        <span className="font-medium text-gray-900 dark:text-white">
-                                            {format(startDate, 'HH:mm')} - {format(endDate, 'HH:mm')}
-                                        </span>
-                                    </div>
-                                )}
-
-                                <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-zinc-800">
-                                    <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                        <Users className="w-5 h-5" />
-                                        <span>{t('capacity')}</span>
-                                    </div>
-                                    <span className="font-medium text-gray-900 dark:text-white">
-                                        {event.capacity} {t('people')}
-                                    </span>
-                                </div>
-
-                                <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-zinc-800">
-                                    <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                        <Banknote className="w-5 h-5" />
-                                        <span>{t('price')}</span>
-                                    </div>
-                                    <span className="font-medium text-gray-900 dark:text-white">
-                                        {event.price} Kč
-                                    </span>
-                                </div>
-                            </div>
-
-                            <Button
-                                href={`/booking?eventId=${event.id}`} // Placeholder
-                                variant="primary"
-                                fullWidth
-                                size="lg"
-                            >
-                                {t('bookNow')}
-                            </Button>
-                        </div>
+                        <EventBookingCard event={event} />
                     </div>
                 </div>
             </Container>

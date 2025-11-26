@@ -1,0 +1,28 @@
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.options": {
+    // "extensions": [".js", ".jsx", ".ts", ".tsx"],
+  },
+  "eslint.lintTask.enable": true,
+  "eslint.lintTask.options": ".",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.eol": "\n",
+  "cSpell.words": [
+    "casl",
+    "fbih",
+    "NEXTAUTH",
+    "persistor",
+    "Persitor",
+    "qrcode",
+    "tabler",
+    "unsubmitted"
+  ],
+  "prettier.configPath": "./.prettierrc.json"
+}
