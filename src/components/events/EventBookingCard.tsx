@@ -15,6 +15,7 @@ import { getEventAvailability } from '@/app/actions/events';
 
 export default function EventBookingCard({ event }: { event: Event }) {
     const t = useTranslations('EventDetails');
+    const tBooking = useTranslations('Booking');
     const startDate = event.start_date ? new Date(event.start_date) : null;
 
     // Pre-select date for single events
@@ -234,59 +235,55 @@ export default function EventBookingCard({ event }: { event: Event }) {
                     </span>
                 </div>
 
-                <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-zinc-800">
-                    <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                        <Banknote className="w-5 h-5" />
-                        <span>{t('price')}</span>
-                    </div>
-                    <span className="font-medium text-gray-900 dark:text-white">
-                        {isFree ? (
-                            t('free')
-                        ) : (
-                            <>
-                                {event.price * quantity} Kč
-                                {quantity > 1 && <span className="text-sm text-gray-500 ml-1">({event.price} Kč / os.)</span>}
-                            </>
-                        )}
-                    </span>
-                </div>
-
                 {/* Quantity Selector */}
-                <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-zinc-800">
-                    <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                        <Users className="w-5 h-5" />
-                        <span>Počet osob</span>
-                    </div>
+                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-zinc-800 rounded-lg">
+                    <span className="font-medium">{t('people')}</span>
                     <div className="flex items-center gap-3">
                         <button
+                            type="button"
                             onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                            className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-zinc-700"
                             disabled={quantity <= 1}
+                            className="w-8 h-8 rounded-full bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             -
                         </button>
-                        <span className="font-medium text-gray-900 dark:text-white w-4 text-center">
-                            {quantity}
-                        </span>
+                        <span className="w-8 text-center font-semibold">{quantity}</span>
                         <button
-                            onClick={() => setQuantity(Math.min(maxQuantity, quantity + 1))}
-                            className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-zinc-700"
-                            disabled={quantity >= maxQuantity}
+                            type="button"
+                            onClick={() => setQuantity(Math.min(availableSeats || 1, quantity + 1))}
+                            disabled={!availableSeats || quantity >= availableSeats}
+                            className="w-8 h-8 rounded-full bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             +
                         </button>
+                    </div>
+                </div>
+
+                {/* Price */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-zinc-800 rounded-lg">
+                    <span className="font-medium">{t('price')}</span>
+                    <div className="text-right">
+                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                            {event.price === 0 ? t('free') : `${event.price * quantity} Kč`}
+                        </div>
+                        {quantity > 1 && event.price > 0 && (
+                            <div className="text-sm text-gray-500">
+                                {quantity} × {event.price} Kč
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
 
             {/* Error Messages */}
             {event.type === 'repeating' && !selectedDate && (
-                <div className="mb-4 text-sm text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg">
+                <div className="bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 p-3 rounded-md text-sm">
                     {t('selectDate')}
                 </div>
             )}
+
             {availableSeats === 0 && (
-                <div className="mb-4 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+                <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-3 rounded-md text-sm font-semibold">
                     {t('soldOut')}
                 </div>
             )}
@@ -305,7 +302,7 @@ export default function EventBookingCard({ event }: { event: Event }) {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                title="Rezervace místa"
+                title={tBooking('modalTitle')}
                 showCancel={false}
             >
                 <EventBookingModal

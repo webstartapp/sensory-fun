@@ -8,50 +8,44 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 
-export default function FeaturedEvents() {
+export default function FeaturedEvents({
+    events = [],
+    title,
+    subtitle
+}: {
+    events?: any[];
+    title?: string;
+    subtitle?: string;
+}) {
     const t = useTranslations('Home.FeaturedEvents');
+    const tRelated = useTranslations('RelatedContent');
+    const displayTitle = title || t('title');
+    const displaySubtitle = subtitle !== undefined ? subtitle : t('subtitle');
 
-    // Dummy Data
-    const events = [
-        {
-            id: 1,
-            title: "Sensory Yoga for Kids",
-            date: "2023-12-15",
-            time: "10:00",
-            duration: "60 min",
-            price: "250 CZK",
-            image: "https://images.unsplash.com/photo-1596464716127-f9a0859b4bce?q=80&w=800&auto=format&fit=crop",
-            category: "Kids"
-        },
-        {
-            id: 2,
-            title: "Relaxation Hour",
-            date: "2023-12-16",
-            time: "18:00",
-            duration: "90 min",
-            price: "350 CZK",
-            image: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=800&auto=format&fit=crop",
-            category: "Adults"
-        },
-        {
-            id: 3,
-            title: "Music Therapy Session",
-            date: "2023-12-18",
-            time: "14:00",
-            duration: "45 min",
-            price: "300 CZK",
-            image: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=800&auto=format&fit=crop",
-            category: "Therapy"
-        }
-    ];
+    if (events.length === 0) {
+        return (
+            <section className="py-24 bg-gray-50 dark:bg-zinc-900">
+                <Container>
+                    <SectionHeading
+                        title={displayTitle}
+                        subtitle={displaySubtitle}
+                        className="mb-12"
+                    />
+                    <div className="text-center text-gray-500 dark:text-gray-400 py-12 bg-white dark:bg-zinc-800 rounded-xl border border-dashed border-gray-300 dark:border-zinc-700">
+                        <p>{tRelated('emptyEvents')}</p>
+                    </div>
+                </Container>
+            </section>
+        );
+    }
 
     return (
         <section className="py-24 bg-gray-50 dark:bg-zinc-900">
             <Container>
                 <div className="flex items-end justify-between mb-12">
                     <SectionHeading
-                        title={t('title')}
-                        subtitle={t('subtitle')}
+                        title={displayTitle}
+                        subtitle={displaySubtitle}
                         className="mb-0"
                     />
                     <Button

@@ -8,17 +8,43 @@ import Card from '@/components/ui/Card';
 import Image from 'next/image';
 import { formatImageSrc } from '@/lib/utils';
 
-export default function GiftVoucherList({ vouchers = [] }: { vouchers: any[] }) {
+export default function GiftVoucherList({
+    vouchers = [],
+    title,
+    subtitle
+}: {
+    vouchers: any[];
+    title?: string;
+    subtitle?: string;
+}) {
     const t = useTranslations('Home.GiftVoucherList');
+    const tRelated = useTranslations('RelatedContent');
+    const displayTitle = title || t('title');
+    const displaySubtitle = subtitle !== undefined ? subtitle : t('subtitle');
 
-    if (vouchers.length === 0) return null;
+    if (vouchers.length === 0) {
+        return (
+            <section className="py-24 bg-gray-50 dark:bg-zinc-900">
+                <Container>
+                    <SectionHeading
+                        title={displayTitle}
+                        subtitle={displaySubtitle}
+                        className="mb-12"
+                    />
+                    <div className="text-center text-gray-500 dark:text-gray-400 py-12 bg-white dark:bg-zinc-800 rounded-xl border border-dashed border-gray-300 dark:border-zinc-700">
+                        <p>{tRelated('emptyVouchers')}</p>
+                    </div>
+                </Container>
+            </section>
+        );
+    }
 
     return (
         <section className="py-24 bg-gray-50 dark:bg-zinc-900">
             <Container>
                 <SectionHeading
-                    title={t('title')}
-                    subtitle={t('subtitle')}
+                    title={displayTitle}
+                    subtitle={displaySubtitle}
                     align="center"
                     className="mb-16"
                 />
@@ -54,7 +80,7 @@ export default function GiftVoucherList({ vouchers = [] }: { vouchers: any[] }) 
 
                                 <div className="space-y-3 mt-auto">
                                     <Button
-                                        href={`/vouchers/${voucher.id}/buy`}
+                                        href={`/vouchers/${voucher.id}`}
                                         variant="primary"
                                         fullWidth
                                     >

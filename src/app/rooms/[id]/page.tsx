@@ -7,6 +7,10 @@ import { MapPin, Users, Banknote, Edit } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { formatImageSrc } from '@/lib/utils';
 import { auth } from '@/auth';
+import { getTracesByRoom } from '@/app/actions/traces';
+import { getImagesByEntity } from '@/app/actions/images';
+import ImageGallery from '@/components/ui/ImageGallery';
+import TraceList from '@/components/traces/TraceList';
 
 export default async function RoomDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -32,6 +36,17 @@ export default async function RoomDetailsPage({ params }: { params: Promise<{ id
         .andWhere('events.is_active', true)
         .andWhere('events.is_public', true)
         .orderBy('events.start_date', 'asc');
+
+    // Get room images and traces
+    const roomImages = await getImagesByEntity('room', id);
+    const traces = await getTracesByRoom(id);
+
+    // Get images for each trace
+    const traceImagesMap: Record<string, any[]> = {};
+    for (const trace of traces) {
+        const images = await getImagesByEntity('trace', trace.id);
+        traceImagesMap[trace.id] = images;
+    }
 
     return (
         <div className="pb-24">
@@ -177,6 +192,16 @@ export default async function RoomDetailsPage({ params }: { params: Promise<{ id
                         </div>
                     </div>
                 </div>
+
+                {/* Room Images Gallery */}
+                {roomImages.length > 0 && (
+                    <ImageGallery images={roomImages} title="Galerie místnosti" />
+                )}
+
+                {/* Traces Section */}
+                {traces.length > 0 && (
+                    <TraceList traces={traces} traceImages={traceImagesMap} />
+                )}
             </Container>
         </div>
     );

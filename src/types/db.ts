@@ -24,8 +24,8 @@ export interface Voucher {
     status: 'active' | 'used' | 'expired';
     description: string | null;
     price: number;
-    start_date: string;
-    end_date: string | null;
+    start_date: Date;
+    end_date: Date | null;
     name: string;
     order: number;
     capacity: number | null;
@@ -35,6 +35,35 @@ export interface Voucher {
     updated_at: Date;
     is_public: boolean;
     is_active: boolean;
+}
+
+export interface Trace {
+    id: string;
+    name: string;
+    description: string | null;
+    image_id: string | null;
+    is_active: boolean;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface Image {
+    id: string;
+    data: string; // Base64
+    room_id: string | null;
+    event_id: string | null;
+    trace_id: string | null;
+    voucher_id: string | null;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface GalleryCollection {
+    id: string;
+    name: string;
+    profile_image_id: string | null;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface Booking {

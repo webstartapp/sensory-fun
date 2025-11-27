@@ -40,6 +40,9 @@ export default function Navbar({ session }: { session: Session | null }) {
                         <Link href="/events" className="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors">
                             {t('events')}
                         </Link>
+                        <Link href="/gallery" className="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors">
+                            {t('gallery')}
+                        </Link>
                     </div>
 
                     {/* Auth Buttons / Profile Menu */}
@@ -127,6 +130,13 @@ export default function Navbar({ session }: { session: Session | null }) {
                             onClick={() => setIsMenuOpen(false)}
                         >
                             {t('events')}
+                        </Link>
+                        <Link
+                            href="/gallery"
+                            className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-lg dark:text-gray-300 dark:hover:bg-gray-900"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            {t('gallery')}
                         </Link>
 
                         <div className="pt-4 mt-4 border-t border-gray-100 dark:border-gray-800 flex flex-col gap-3">

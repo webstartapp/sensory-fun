@@ -12,6 +12,15 @@ declare module 'knex' {
     }
 }
 
-const db = knex(config.development);
+const db = knex({
+    ...config.development,
+    pool: {
+        min: 1,
+        max: 5,
+        afterCreate: (conn: any, done: any) => {
+            done(null, conn);
+        }
+    }
+});
 
 export default db;

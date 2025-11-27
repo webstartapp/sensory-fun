@@ -10,6 +10,13 @@ import { cs } from 'date-fns/locale';
 import { formatImageSrc } from '@/lib/utils';
 import { auth } from '@/auth';
 import EventBookingCard from '@/components/events/EventBookingCard';
+import RoomList from '@/components/home/RoomList';
+import FeaturedEvents from '@/components/home/FeaturedEvents';
+import { getEventsByRoom } from '@/app/actions/events';
+import { getTracesByEvent } from '@/app/actions/traces';
+import { getImagesByEntity } from '@/app/actions/images';
+import ImageGallery from '@/components/ui/ImageGallery';
+import TraceList from '@/components/traces/TraceList';
 
 export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -29,8 +36,33 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
         notFound();
     }
 
+    const room = await db('rooms')
+        .leftJoin('images', 'rooms.image_id', 'images.id')
+        .select('rooms.*', 'images.data as image')
+        .where('rooms.id', event.room_id)
+        .first();
+
+    const relatedEvents = await getEventsByRoom(event.room_id, {
+        upcomingOnly: true,
+        excludeEventId: event.id,
+        limit: 3
+    });
+    const tRelated = await getTranslations('RelatedContent');
+
     const startDate = event.start_date ? new Date(event.start_date) : null;
     const endDate = event.end_date ? new Date(event.end_date) : null;
+
+    // Get event images, room images, and traces
+    const eventImages = await getImagesByEntity('event', id);
+    const roomImages = room ? await getImagesByEntity('room', room.id) : [];
+    const traces = await getTracesByEvent(id);
+
+    // Get images for each trace
+    const traceImagesMap: Record<string, any[]> = {};
+    for (const trace of traces) {
+        const images = await getImagesByEntity('trace', trace.id);
+        traceImagesMap[trace.id] = images;
+    }
 
     return (
         <div className="pb-24">
@@ -104,6 +136,26 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
                                 <p>{event.description}</p>
                             </div>
                         </div>
+
+                        {/* Room Info */}
+                        {room && (
+                            <div>
+                                <RoomList
+                                    rooms={[room]}
+                                    title={tRelated('roomForEvent')}
+                                    subtitle=" "
+                                />
+                            </div>
+                        )}
+
+                        {/* Related Events */}
+                        <div>
+                            <FeaturedEvents
+                                events={relatedEvents}
+                                title={tRelated('moreEventsInRoom')}
+                                subtitle=" "
+                            />
+                        </div>
                     </div>
 
                     {/* Sidebar / Info Card */}
@@ -111,6 +163,21 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
                         <EventBookingCard event={event} />
                     </div>
                 </div>
+
+                {/* Event Images Gallery */}
+                {eventImages.length > 0 && (
+                    <ImageGallery images={eventImages} title="Galerie akce" />
+                )}
+
+                {/* Room Images Gallery */}
+                {roomImages.length > 0 && (
+                    <ImageGallery images={roomImages} title="Galerie místnosti" />
+                )}
+
+                {/* Traces Section */}
+                {traces.length > 0 && (
+                    <TraceList traces={traces} traceImages={traceImagesMap} />
+                )}
             </Container>
         </div>
     );

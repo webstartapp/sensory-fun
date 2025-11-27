@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import { createEventBookingAndInitiatePayment } from '@/app/actions/bookings';
 import { Event } from '@/types/db';
+import { useTranslations } from 'next-intl';
 
 interface EventBookingModalProps {
     event: Event;
@@ -13,6 +14,8 @@ interface EventBookingModalProps {
 }
 
 export default function EventBookingModal({ event, quantity, selectedDate, onSuccess }: EventBookingModalProps) {
+    const t = useTranslations('Booking');
+    const tEvent = useTranslations('EventDetails');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -44,14 +47,14 @@ export default function EventBookingModal({ event, quantity, selectedDate, onSuc
             );
 
             if (!result.success || !result.paymentUrl) {
-                setError(result.message || 'Nepodařilo se vytvořit rezervaci');
+                setError(result.message || t('failedToCreateBooking'));
                 setLoading(false);
             } else {
                 // Redirect to payment gateway
                 window.location.href = result.paymentUrl;
             }
         } catch (err) {
-            setError('Došlo k neočekávané chybě.');
+            setError(t('unexpectedError'));
             setLoading(false);
         }
     };
@@ -69,33 +72,33 @@ export default function EventBookingModal({ event, quantity, selectedDate, onSuc
 
             {/* Booking Summary */}
             <div className="bg-gray-50 dark:bg-zinc-800 p-4 rounded-lg space-y-2">
-                <h3 className="font-semibold text-lg mb-3">Souhrn rezervace</h3>
+                <h3 className="font-semibold text-lg mb-3">{t('summary')}</h3>
                 <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Akce:</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t('event')}:</span>
                     <span className="font-medium">{event.name}</span>
                 </div>
                 {selectedDate && (
                     <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Datum:</span>
+                        <span className="text-gray-600 dark:text-gray-400">{t('date')}:</span>
                         <span className="font-medium">{selectedDate.toLocaleDateString('cs-CZ')}</span>
                     </div>
                 )}
                 <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Počet osob:</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t('peopleCount')}:</span>
                     <span className="font-medium">{quantity}</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold pt-2 border-t border-gray-200 dark:border-zinc-700">
-                    <span>Celková cena:</span>
-                    <span>{isFree ? 'Zdarma' : `${totalPrice} Kč`}</span>
+                    <span>{t('totalPrice')}:</span>
+                    <span>{isFree ? tEvent('free') : `${totalPrice} Kč`}</span>
                 </div>
             </div>
 
             {/* Customer Details */}
             <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Kontaktní údaje</h3>
+                <h3 className="font-semibold text-lg">{t('contactDetails')}</h3>
 
                 <div>
-                    <label className="block text-sm font-medium mb-1">Jméno a Příjmení *</label>
+                    <label className="block text-sm font-medium mb-1">{t('fullName')} {t('requiredField')}</label>
                     <input
                         required
                         name="name"
@@ -107,7 +110,7 @@ export default function EventBookingModal({ event, quantity, selectedDate, onSuc
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium mb-1">Email *</label>
+                    <label className="block text-sm font-medium mb-1">{t('email')} {t('requiredField')}</label>
                     <input
                         required
                         type="email"
@@ -120,7 +123,7 @@ export default function EventBookingModal({ event, quantity, selectedDate, onSuc
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium mb-1">Telefon *</label>
+                    <label className="block text-sm font-medium mb-1">{t('phone')} {t('requiredField')}</label>
                     <input
                         required
                         type="tel"
@@ -135,13 +138,13 @@ export default function EventBookingModal({ event, quantity, selectedDate, onSuc
 
             {/* Submit Button */}
             <Button type="submit" fullWidth disabled={loading}>
-                {loading ? 'Zpracovává se...' : isFree ? 'Potvrdit rezervaci' : 'Pokračovat k platbě'}
+                {loading ? t('processing') : isFree ? t('confirmBooking') : t('proceedToPayment')}
             </Button>
 
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
                 {isFree
-                    ? 'Potvrzením vytvoříte rezervaci.'
-                    : 'Budete přesměrováni na platební bránu pro dokončení platby.'
+                    ? t('confirmationNote')
+                    : t('paymentRedirectNote')
                 }
             </p>
         </form>

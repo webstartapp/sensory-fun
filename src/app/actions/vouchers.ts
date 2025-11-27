@@ -151,3 +151,20 @@ export async function deleteVoucher(id: string) {
         return { message: 'Database Error: Failed to Delete Voucher.' };
     }
 }
+
+export async function getVouchersByRoom(roomId: string, limit?: number) {
+    let query = db('vouchers')
+        .join('voucher_rooms', 'vouchers.id', 'voucher_rooms.voucher_id')
+        .leftJoin('images', 'vouchers.image_id', 'images.id')
+        .select('vouchers.*', 'images.data as image')
+        .where('voucher_rooms.room_id', roomId)
+        .where('vouchers.is_public', true)
+        .where('vouchers.is_active', true)
+        .orderBy('vouchers.order', 'asc');
+
+    if (limit) {
+        query = query.limit(limit);
+    }
+
+    return await query;
+}

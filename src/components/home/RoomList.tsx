@@ -9,17 +9,44 @@ import Card from '@/components/ui/Card';
 import Image from 'next/image';
 import { formatImageSrc } from '@/lib/utils';
 
-export default function RoomList({ rooms = [] }: { rooms: any[] }) {
+export default function RoomList({
+    rooms = [],
+    title,
+    subtitle
+}: {
+    rooms: any[];
+    title?: string;
+    subtitle?: string;
+}) {
     const t = useTranslations('Home.RoomList');
+    const tRelated = useTranslations('RelatedContent');
+    const displayTitle = title || t('title');
+    const displaySubtitle = subtitle !== undefined ? subtitle : t('subtitle');
 
-    if (rooms.length === 0) return null;
+    if (rooms.length === 0) {
+        return (
+            <section className="py-24 bg-white dark:bg-black">
+                <Container>
+                    <SectionHeading
+                        title={displayTitle}
+                        subtitle={displaySubtitle}
+                        align="center"
+                        className="mb-12"
+                    />
+                    <div className="text-center text-gray-500 dark:text-gray-400 py-12 bg-gray-50 dark:bg-zinc-900 rounded-xl border border-dashed border-gray-300 dark:border-zinc-700">
+                        <p>{tRelated('emptyRooms')}</p>
+                    </div>
+                </Container>
+            </section>
+        );
+    }
 
     return (
         <section className="py-24 bg-white dark:bg-black">
             <Container>
                 <SectionHeading
-                    title={t('title')}
-                    subtitle={t('subtitle')}
+                    title={displayTitle}
+                    subtitle={displaySubtitle}
                     align="center"
                     className="mb-16"
                 />

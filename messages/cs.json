@@ -81,6 +81,7 @@
         "about": "O nás",
         "rooms": "Místnosti",
         "events": "Události",
+        "gallery": "Galerie",
         "vouchers": "Dárkové poukazy",
         "contact": "Kontakt",
         "login": "Přihlášení",
@@ -97,6 +98,92 @@
         "followUs": "Sledujte nás",
         "allRightsReserved": "Všechna práva vyhrazena."
     },
+    "Auth": {
+        "loginTitle": "Přihlaste se pro pokračování",
+        "registerTitle": "Vytvořit účet",
+        "email": "Email",
+        "password": "Heslo",
+        "firstName": "Jméno",
+        "lastName": "Příjmení",
+        "emailPlaceholder": "Zadejte svůj email",
+        "passwordPlaceholder": "Zadejte heslo",
+        "loginButton": "Přihlásit se",
+        "registerButton": "Registrovat",
+        "errors": {
+            "invalidCredentials": "Neplatné přihlašovací údaje.",
+            "userExists": "Uživatel s tímto emailem již existuje.",
+            "failedToCreate": "Nepodařilo se vytvořit uživatele.",
+            "missingFields": "Chybějící pole. Prosím vyplňte všechna pole."
+        }
+    },
+    "Modal": {
+        "cancel": "Zrušit"
+    },
+    "Booking": {
+        "modalTitle": "Rezervace místa",
+        "summary": "Souhrn rezervace",
+        "event": "Akce",
+        "date": "Datum",
+        "peopleCount": "Počet osob",
+        "totalPrice": "Celková cena",
+        "contactDetails": "Kontaktní údaje",
+        "fullName": "Jméno a Příjmení",
+        "email": "Email",
+        "phone": "Telefon",
+        "processing": "Zpracovává se...",
+        "confirmBooking": "Potvrdit rezervaci",
+        "proceedToPayment": "Pokračovat k platbě",
+        "confirmationNote": "Potvrzením vytvoříte rezervaci.",
+        "paymentRedirectNote": "Budete přesměrováni na platební bránu pro dokončení platby.",
+        "requiredField": "*",
+        "failedToCreateBooking": "Nepodařilo se vytvořit rezervaci",
+        "unexpectedError": "Došlo k neočekávané chybě."
+    },
+    "PaymentConfirmation": {
+        "success": {
+            "title": "Platba úspěšná!",
+            "message": "Vaše rezervace byla potvrzena.",
+            "bookingNumber": "Číslo rezervace",
+            "emailSent": "Potvrzení bylo odesláno na váš email.",
+            "backToEvents": "Zpět na akce"
+        },
+        "failure": {
+            "title": "Platba se nezdařila",
+            "message": "Při zpracování platby došlo k chybě.",
+            "retryMessage": "Můžete to zkusit znovu nebo nás kontaktovat.",
+            "backToEvents": "Zpět na akce",
+            "contact": "Kontakt"
+        }
+    },
+    "RelatedContent": {
+        "eventsInRoom": "Akce v této místnosti",
+        "vouchersForRoom": "Poukazy pro tuto místnost",
+        "moreEventsInRoom": "Další akce v této místnosti",
+        "roomForEvent": "Místnost",
+        "roomsForVoucher": "Místnosti pro tento poukaz",
+        "noRelatedEvents": "Žádné související akce",
+        "noRelatedVouchers": "Žádné související poukazy",
+        "noRelatedRooms": "Žádné související místnosti",
+        "emptyEvents": "Momentálně nejsou k dispozici žádné akce.",
+        "emptyVouchers": "Momentálně nejsou k dispozici žádné poukazy.",
+        "emptyRooms": "Momentálně nejsou k dispozici žádné místnosti."
+    },
+    "Traces": {
+        "title": "Smyslové tácy",
+        "subtitle": "Objevte naše unikátní smyslové prvky",
+        "viewDetails": "Zobrazit detail",
+        "noTraces": "Momentálně nejsou k dispozici žádné tácy",
+        "details": "Detaily",
+        "gallery": "Galerie",
+        "roomsWithTrace": "Místnosti s tímto tácem",
+        "eventsWithTrace": "Akce s tímto tácem"
+    },
+    "GalleryPage": {
+        "title": "Galerie",
+        "subtitle": "Prohlédněte si fotografie z našich smyslových místností a akcí.",
+        "all": "Vše",
+        "noImages": "Zatím nejsou k dispozici žádné fotografie."
+    },
     "Admin": {
         "dashboard": "Nástěnka",
         "totalBookings": "Celkem rezervací",
@@ -106,6 +193,9 @@
             "events": "Události",
             "bookings": "Rezervace",
             "vouchers": "Poukazy",
+            "traces": "Tácy",
+            "galleries": "Galerie",
+            "images": "Obrázky",
             "banners": "Bannery",
             "settings": "Nastavení",
             "logout": "Odhlásit se"
@@ -205,24 +295,42 @@
             "linkUrl": "URL odkazu",
             "isActive": "Aktivní",
             "update": "Upravit banner"
-        }
-    },
-    "Auth": {
-        "loginTitle": "Přihlaste se pro pokračování",
-        "registerTitle": "Vytvořit účet",
-        "email": "Email",
-        "password": "Heslo",
-        "firstName": "Jméno",
-        "lastName": "Příjmení",
-        "emailPlaceholder": "Zadejte svůj email",
-        "passwordPlaceholder": "Zadejte heslo",
-        "loginButton": "Přihlásit se",
-        "registerButton": "Registrovat",
-        "errors": {
-            "invalidCredentials": "Neplatné přihlašovací údaje.",
-            "userExists": "Uživatel s tímto emailem již existuje.",
-            "failedToCreate": "Nepodařilo se vytvořit uživatele.",
-            "missingFields": "Chybějící pole. Prosím vyplňte všechna pole."
+        },
+        "Images": {
+            "title": "Knihovna obrázků",
+            "subtitle": "Spravujte všechny nahrané obrázky",
+            "uploadImage": "Nahrát obrázek",
+            "noImages": "Zatím nejsou nahrány žádné obrázky",
+            "uploadFirstImage": "Nahrát první obrázek",
+            "viewDetails": "Zobrazit detail",
+            "assigned": "Přiřazeno"
+        },
+        "Galleries": {
+            "title": "Galerie",
+            "subtitle": "Spravujte kolekce obrázků",
+            "createGallery": "Vytvořit galerii",
+            "noGalleries": "Zatím nejsou vytvořeny žádné galerie",
+            "createFirstGallery": "Vytvořit první galerii",
+            "profileImage": "Profilový obrázek",
+            "name": "Název",
+            "imageCount": "Počet obrázků",
+            "actions": "Akce",
+            "edit": "Upravit"
+        },
+        "Traces": {
+            "title": "Tácy",
+            "subtitle": "Spravujte smyslové prvky",
+            "createTrace": "Vytvořit tác",
+            "noTraces": "Zatím nejsou vytvořeny žádné tácy",
+            "createFirstTrace": "Vytvořit první tác",
+            "image": "Obrázek",
+            "name": "Název",
+            "description": "Popis",
+            "status": "Stav",
+            "actions": "Akce",
+            "edit": "Upravit",
+            "active": "Aktivní",
+            "inactive": "Neaktivní"
         }
     }
 }

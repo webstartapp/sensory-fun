@@ -144,3 +144,19 @@ export async function deleteRoom(id: string) {
         return { message: 'Database Error: Failed to Delete Room.' };
     }
 }
+
+export async function getRoomsByVoucher(voucherId: string) {
+    return await db('rooms')
+        .join('voucher_rooms', 'rooms.id', 'voucher_rooms.room_id')
+        .leftJoin('images', 'rooms.image_id', 'images.id')
+        .select('rooms.*', 'images.data as image')
+        .where('voucher_rooms.voucher_id', voucherId)
+        .where('rooms.is_public', true)
+        .where('rooms.is_active', true)
+        .orderBy('rooms.order', 'asc');
+}
+
+// Get all rooms (admin use)
+export async function getRooms() {
+    return await db('rooms').select('*').orderBy('name', 'asc');
+}

@@ -7,10 +7,13 @@ import { Banknote, Gift, Edit } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { formatImageSrc } from '@/lib/utils';
 import { auth } from '@/auth';
+import RoomList from '@/components/home/RoomList';
+import { getRoomsByVoucher } from '@/app/actions/rooms';
 
 export default async function VoucherDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const t = await getTranslations('VoucherDetails');
+    const tRelated = await getTranslations('RelatedContent');
     const session = await auth();
 
     const voucher = await db('vouchers')
@@ -23,6 +26,8 @@ export default async function VoucherDetailsPage({ params }: { params: Promise<{
     if (!voucher) {
         notFound();
     }
+
+    const rooms = await getRoomsByVoucher(id);
 
     return (
         <div className="pb-24">
@@ -79,6 +84,15 @@ export default async function VoucherDetailsPage({ params }: { params: Promise<{
                             <div className="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
                                 <p>{voucher.description}</p>
                             </div>
+                        </div>
+
+                        {/* Related Rooms */}
+                        <div>
+                            <RoomList
+                                rooms={rooms}
+                                title={tRelated('roomsForVoucher')}
+                                subtitle=" "
+                            />
                         </div>
                     </div>
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Calendar, Users, Ticket, Settings, LogOut, Image as ImageIcon } from 'lucide-react';
+import { LayoutDashboard, Calendar, Users, Ticket, Settings, LogOut, Image as ImageIcon, Footprints, Library, Images } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 const navigation = [
@@ -11,6 +11,9 @@ const navigation = [
     { name: 'events', href: '/admin/events', icon: Calendar },
     { name: 'bookings', href: '/admin/bookings', icon: Users },
     { name: 'vouchers', href: '/admin/vouchers', icon: Ticket },
+    { name: 'traces', href: '/admin/traces', icon: Footprints },
+    { name: 'galleries', href: '/admin/galleries', icon: Library },
+    { name: 'images', href: '/admin/images', icon: Images },
     { name: 'banners', href: '/admin/banners', icon: ImageIcon },
     { name: 'settings', href: '/admin/settings', icon: Settings },
 ];

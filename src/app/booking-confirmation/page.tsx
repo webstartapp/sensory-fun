@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import { CheckCircle, XCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default async function BookingConfirmationPage({
     searchParams,
 }: {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+    const t = useTranslations('PaymentConfirmation');
     const params = await searchParams;
     const result = params.RESULT as string;
     const orderId = params.ORDER_ID as string;
@@ -28,16 +30,16 @@ export default async function BookingConfirmationPage({
                         </div>
                         <div>
                             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                                Platba úspěšná!
+                                {t('success.title')}
                             </h1>
                             <p className="text-gray-600 dark:text-gray-400">
-                                Vaše rezervace byla potvrzena.
+                                {t('success.message')}
                             </p>
                         </div>
                         {bookingId && (
                             <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-lg">
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    Číslo rezervace
+                                    {t('success.bookingNumber')}
                                 </p>
                                 <p className="text-lg font-mono font-semibold text-gray-900 dark:text-white">
                                     {bookingId}
@@ -46,11 +48,11 @@ export default async function BookingConfirmationPage({
                         )}
                         <div className="space-y-3">
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                                Potvrzení bylo odesláno na váš email.
+                                {t('success.emailSent')}
                             </p>
                             <Link href="/events">
                                 <Button fullWidth>
-                                    Zpět na akce
+                                    {t('success.backToEvents')}
                                 </Button>
                             </Link>
                         </div>
@@ -62,25 +64,25 @@ export default async function BookingConfirmationPage({
                         </div>
                         <div>
                             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                                Platba se nezdařila
+                                {t('failure.title')}
                             </h1>
                             <p className="text-gray-600 dark:text-gray-400">
-                                {message || 'Při zpracování platby došlo k chybě.'}
+                                {message || t('failure.message')}
                             </p>
                         </div>
                         <div className="space-y-3">
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                                Můžete to zkusit znovu nebo nás kontaktovat.
+                                {t('failure.retryMessage')}
                             </p>
                             <div className="flex gap-3">
                                 <Link href="/events" className="flex-1">
                                     <Button variant="outline" fullWidth>
-                                        Zpět na akce
+                                        {t('failure.backToEvents')}
                                     </Button>
                                 </Link>
                                 <Link href="/contact" className="flex-1">
                                     <Button fullWidth>
-                                        Kontakt
+                                        {t('failure.contact')}
                                     </Button>
                                 </Link>
                             </div>

@@ -204,3 +204,39 @@ export async function getEventAvailability(eventId: string, date: Date) {
         bookedSeats: Number(bookings?.booked_seats || 0)
     };
 }
+
+export async function getEventsByRoom(
+    roomId: string,
+    options?: {
+        limit?: number;
+        excludeEventId?: string;
+        upcomingOnly?: boolean;
+    }
+) {
+    let query = db('events')
+        .leftJoin('images', 'events.image_id', 'images.id')
+        .select('events.*', 'images.data as image')
+        .where('events.room_id', roomId)
+        .where('events.is_public', true)
+        .where('events.is_active', true)
+        .orderBy('events.start_date', 'asc');
+
+    if (options?.excludeEventId) {
+        query = query.whereNot('events.id', options.excludeEventId);
+    }
+
+    if (options?.upcomingOnly) {
+        query = query.where('events.start_date', '>=', new Date());
+    }
+
+    if (options?.limit) {
+        query = query.limit(options.limit);
+    }
+
+    return await query;
+}
+
+// Get all events (admin use)
+export async function getEvents() {
+    return await db('events').select('*').orderBy('name', 'asc');
+}
