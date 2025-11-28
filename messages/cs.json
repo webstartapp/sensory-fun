@@ -201,6 +201,7 @@
             "logout": "Odhlásit se"
         },
         "rooms": {
+            "title": "Místnosti",
             "name": "Název místnosti",
             "description": "Popis",
             "location": "Umístění",

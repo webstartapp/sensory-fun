@@ -60,15 +60,15 @@ export default function Footer() {
                         <ul className="space-y-3">
                             <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
                                 <MapPin className="w-5 h-5 text-indigo-600 shrink-0" />
-                                <span>123 Sensory Lane<br />Prague, Czech Republic</span>
+                                <span>Údolní 389/10<br />602 00 Brno-střed-Veveří</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                                 <Phone className="w-5 h-5 text-indigo-600 shrink-0" />
-                                <span>+420 123 456 789</span>
+                                <span>+420 774 908 782</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                                 <Mail className="w-5 h-5 text-indigo-600 shrink-0" />
-                                <span>hello@sensoryfun.cz</span>
+                                <span>sensory.fun.cz@gmail.com</span>
                             </li>
                         </ul>
                     </div>
@@ -77,10 +77,10 @@ export default function Footer() {
                     <div>
                         <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('followUs')}</h3>
                         <div className="flex gap-4">
-                            <a href="#" className="p-2 bg-white rounded-full shadow-sm hover:text-indigo-600 hover:shadow-md transition-all dark:bg-zinc-800 dark:text-gray-400 dark:hover:text-white">
+                            <a href="https://www.facebook.com/share/1HxWCowafC/" target="_blank" className="p-2 bg-white rounded-full shadow-sm hover:text-indigo-600 hover:shadow-md transition-all dark:bg-zinc-800 dark:text-gray-400 dark:hover:text-white">
                                 <Facebook className="w-5 h-5" />
                             </a>
-                            <a href="#" className="p-2 bg-white rounded-full shadow-sm hover:text-pink-600 hover:shadow-md transition-all dark:bg-zinc-800 dark:text-gray-400 dark:hover:text-white">
+                            <a href="https://www.instagram.com/sensoryfuncz/#" target="_blank" className="p-2 bg-white rounded-full shadow-sm hover:text-pink-600 hover:shadow-md transition-all dark:bg-zinc-800 dark:text-gray-400 dark:hover:text-white">
                                 <Instagram className="w-5 h-5" />
                             </a>
                         </div>
