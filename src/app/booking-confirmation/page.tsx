@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import { CheckCircle, XCircle } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 export default async function BookingConfirmationPage({
     searchParams,
 }: {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-    const t = useTranslations('PaymentConfirmation');
+    const t = await getTranslations('PaymentConfirmation');
     const params = await searchParams;
     const result = params.RESULT as string;
     const orderId = params.ORDER_ID as string;

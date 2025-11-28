@@ -34,23 +34,39 @@ export default function EventBookingCard({ event }: { event: Event }) {
     useEffect(() => {
         // Fetch availability for both repeating events and single events
         if (selectedDate) {
-            setIsLoadingCapacity(true);
-            getEventAvailability(event.id, selectedDate)
-                .then(data => {
+            let isCancelled = false;
+            
+            const fetchAvailability = async () => {
+                if (isCancelled) return;
+                setIsLoadingCapacity(true);
+                
+                try {
+                    const data = await getEventAvailability(event.id, selectedDate);
+                    if (isCancelled) return;
+                    
                     const available = Math.max(0, totalCapacity - data.bookedSeats);
                     setAvailableSeats(available);
                     // Reset quantity if it exceeds available
                     if (quantity > available) setQuantity(1);
-                })
-                .catch(err => {
+                } catch (err) {
+                    if (isCancelled) return;
                     console.error('Failed to fetch availability', err);
                     setAvailableSeats(null);
-                })
-                .finally(() => {
-                    setIsLoadingCapacity(false);
-                });
+                } finally {
+                    if (!isCancelled) {
+                        setIsLoadingCapacity(false);
+                    }
+                }
+            };
+            
+            fetchAvailability();
+            
+            return () => {
+                isCancelled = true;
+            };
         } else {
             setAvailableSeats(null);
+            setIsLoadingCapacity(false);
         }
     }, [selectedDate, event.id, totalCapacity, quantity]);
 
