@@ -42,13 +42,28 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/about" className="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                <Link href="/info/about" className="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
                                     {t('about')}
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/contact" className="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                <Link href="/info/contact" className="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
                                     {t('contact')}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/info/terms" className="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                    {t('terms')}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/info/gdpr" className="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                    {t('gdpr')}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/info/trade-terms" className="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                    {t('tradeTerms')}
                                 </Link>
                             </li>
                         </ul>

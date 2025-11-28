@@ -80,7 +80,7 @@ export default async function BookingConfirmationPage({
                                         {t('failure.backToEvents')}
                                     </Button>
                                 </Link>
-                                <Link href="/contact" className="flex-1">
+                                <Link href="/info/contact" className="flex-1">
                                     <Button fullWidth>
                                         {t('failure.contact')}
                                     </Button>

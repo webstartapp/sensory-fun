@@ -95,6 +95,9 @@
         "events": "Události",
         "about": "O nás",
         "contact": "Kontakt",
+        "terms": "Obchodní podmínky",
+        "gdpr": "GDPR",
+        "tradeTerms": "Podmínky prodeje",
         "followUs": "Sledujte nás",
         "allRightsReserved": "Všechna práva vyhrazena."
     },
@@ -197,6 +200,7 @@
             "galleries": "Galerie",
             "images": "Obrázky",
             "banners": "Bannery",
+            "pages": "Stránky",
             "settings": "Nastavení",
             "logout": "Odhlásit se"
         },
@@ -332,6 +336,17 @@
             "edit": "Upravit",
             "active": "Aktivní",
             "inactive": "Neaktivní"
+        },
+        "pages": {
+            "title": "Veřejné stránky",
+            "create": "Vytvořit stránku",
+            "update": "Upravit stránku",
+            "editTitle": "Upravit stránku",
+            "createTitle": "Nová stránka",
+            "slug": "URL slug",
+            "pageTitle": "Nadpis",
+            "content": "Obsah",
+            "isPublished": "Publikováno"
         }
     }
 }
