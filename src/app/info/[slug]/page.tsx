@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getPublicPage } from '@/app/actions/pages';
+import MarkdownRenderer from '@/components/ui/MarkdownRenderer';
 
 export default async function InfoPage({
     params,
@@ -20,11 +21,7 @@ export default async function InfoPage({
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
                         {page.title}
                     </h1>
-                    <div className="prose prose-gray dark:prose-invert max-w-none">
-                        <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
-                            {page.content}
-                        </div>
-                    </div>
+                    <MarkdownRenderer content={page.content} />
                 </article>
             </div>
         </div>

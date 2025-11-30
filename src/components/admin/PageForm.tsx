@@ -1,11 +1,12 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import { createPage, updatePage } from '@/app/actions/pages';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Card from '@/components/ui/Card';
+import RichTextEditor from '@/components/ui/RichTextEditor';
 
 interface PageFormProps {
     page?: {
@@ -20,6 +21,7 @@ interface PageFormProps {
 export default function PageForm({ page }: PageFormProps) {
     const t = useTranslations('Admin');
     const isEditing = !!page;
+    const [content, setContent] = useState(page?.content || '');
 
     const action = isEditing ? updatePage.bind(null, page.id) : createPage;
     const [state, dispatch] = useActionState(action, undefined);
@@ -46,20 +48,17 @@ export default function PageForm({ page }: PageFormProps) {
                         error={state?.errors?.title}
                     />
                     <div>
-                        <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            {t('pages.content')}
-                        </label>
-                        <textarea
-                            id="content"
-                            name="content"
-                            rows={12}
-                            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:placeholder-zinc-500"
-                            defaultValue={page?.content || ''}
-                            required
+                        <RichTextEditor
+                            label={t('pages.content')}
+                            id="content-editor"
+                            value={content}
+                            onChange={setContent}
+                            error={state?.errors?.content}
+                            placeholder={t('pages.content')}
+                            minHeight="300px"
                         />
-                        {state?.errors?.content && (
-                            <p className="mt-1 text-sm text-red-500">{state.errors.content}</p>
-                        )}
+                        {/* Hidden input to submit the content with the form */}
+                        <input type="hidden" name="content" value={content} />
                     </div>
                     <div className="flex items-center">
                         <input

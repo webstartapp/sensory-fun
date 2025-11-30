@@ -1,0 +1,116 @@
+/* Import Draft.js base styles */
+@import 'draft-js/dist/Draft.css';
+
+/* Draft.js Editor Wrapper Styles */
+.draft-editor-wrapper {
+    font-family: inherit;
+}
+
+/* Editor Content Area */
+.draft-editor-content {
+    font-size: 0.875rem;
+    min-height: 150px;
+    color: inherit;
+}
+
+.dark .draft-editor-content {
+    color: #ffffff;
+}
+
+.draft-editor-content .DraftEditor-root {
+    min-height: 100px;
+}
+
+.draft-editor-content .public-DraftEditor-content {
+    min-height: 100px;
+}
+
+/* Placeholder */
+.draft-editor-content .public-DraftEditorPlaceholder-root {
+    color: #9ca3af;
+}
+
+.dark .draft-editor-content .public-DraftEditorPlaceholder-root {
+    color: #6b7280;
+}
+
+/* Block styles */
+.draft-editor-content .public-DraftStyleDefault-block {
+    margin: 0.5rem 0;
+}
+
+/* Custom block style classes */
+.draft-editor-content .editor-header-one {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    line-height: 1.2;
+}
+
+.draft-editor-content .editor-header-two {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.875rem 0;
+    line-height: 1.3;
+}
+
+.draft-editor-content .editor-header-three {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0.75rem 0;
+    line-height: 1.4;
+}
+
+.draft-editor-content .editor-paragraph {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.draft-editor-content .editor-unordered-list,
+.draft-editor-content .editor-ordered-list {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.draft-editor-content .editor-unordered-list {
+    list-style-type: disc;
+}
+
+.draft-editor-content .editor-ordered-list {
+    list-style-type: decimal;
+}
+
+/* Fallback styles for default Draft.js classes */
+.draft-editor-content h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.draft-editor-content h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.875rem 0;
+}
+
+.draft-editor-content h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0.75rem 0;
+}
+
+.draft-editor-content ul,
+.draft-editor-content ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.draft-editor-content li {
+    margin: 0.25rem 0;
+}
+
+/* Focus State */
+.draft-editor-wrapper:focus-within {
+    outline: 2px solid #6366f1;
+    outline-offset: -2px;
+}

@@ -24,7 +24,7 @@ export default function Navbar({ session }: { session: Session | null }) {
                         <div className="p-2 bg-indigo-600 rounded-lg">
                             <Sparkles className="w-5 h-5 text-white" />
                         </div>
-                        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+                        <span className="text-xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
                             Sensory Fun
                         </span>
                     </Link>

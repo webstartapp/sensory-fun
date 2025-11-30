@@ -137,7 +137,7 @@ export default async function RoomDetailsPage({ params }: { params: Promise<{ id
                                                     <p>Cena: {event.price} Kč</p>
                                                 </div>
                                                 <Button
-                                                    href={`/events/${event.id}/book`}
+                                                    href={`/events/${event.id}`}
                                                     variant="primary"
                                                     fullWidth
                                                     size="sm"
